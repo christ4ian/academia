@@ -3,13 +3,31 @@
   "appName": "Academia",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "backgroundColor": "#FCFBFA",
   "server": {
     "androidScheme": "https"
   },
   "android": {
+    "backgroundColor": "#FCFBFA",
     "buildOptions": {
       "keystorePath": "",
       "keystorePassword": ""
+    }
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0,
+      "launchAutoHide": true,
+      "backgroundColor": "#FCFBFA",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": false,
+      "splashImmersive": false
+    },
+    "Keyboard": {
+      "resize": "native",
+      "resizeOnFullScreen": true
     }
   }
 }

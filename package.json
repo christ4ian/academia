@@ -16,7 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "@capacitor/android": "^8.0.0",
-    "@capacitor/core": "^8.0.0"
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/keyboard": "^8.0.0",
+    "@capacitor/splash-screen": "^8.0.0"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.0.0"

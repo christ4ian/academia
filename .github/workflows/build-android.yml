@@ -39,6 +39,63 @@ jobs:
           fi
           npx cap sync android
 
+      - name: Patch Android splash color & keyboard mode
+        run: |
+          python3 - <<'EOF'
+          import re, os
+          res = 'android/app/src/main/res/values'
+          os.makedirs(res, exist_ok=True)
+          with open(res + '/academia_colors.xml', 'w') as f:
+              f.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="academia_bg">#FCFBFA</color>\n</resources>\n')
+          p = res + '/styles.xml'
+          s = open(p).read()
+          def patch(m):
+              body = m.group(0)
+              body = re.sub(r'\s*<item name="(android:background|android:windowBackground|windowSplashScreenBackground)">.*?</item>', '', body)
+              body = body.replace('</style>', '    <item name="android:background">@color/academia_bg</item>\n        <item name="android:windowBackground">@color/academia_bg</item>\n        <item name="windowSplashScreenBackground">@color/academia_bg</item>\n    </style>')
+              return body
+          s = re.sub(r'<style name="(AppTheme\.NoActionBarLaunch|AppTheme\.NoActionBar|AppTheme)"[^>]*>.*?</style>', patch, s, flags=re.S)
+          open(p, 'w').write(s)
+          m = 'android/app/src/main/AndroidManifest.xml'
+          t = open(m).read()
+          t = re.sub(r'android:windowSoftInputMode="[^"]*"', '', t)
+          t = t.replace('<activity', '<activity android:windowSoftInputMode="adjustResize"', 1)
+          open(m, 'w').write(t)
+          import glob
+          for d in glob.glob('android/app/src/main/res/drawable*'):
+              for f in glob.glob(d + '/splash.*'):
+                  os.remove(f)
+          os.makedirs('android/app/src/main/res/drawable', exist_ok=True)
+          open('android/app/src/main/res/drawable/splash.xml', 'w').write('<?xml version="1.0" encoding="utf-8"?>\n<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">\n    <solid android:color="#FCFBFA" />\n</shape>\n')
+          EOF
+
+      - name: Generate Android launcher icons
+        run: |
+          pip install pillow
+          python3 - <<'EOF'
+          import os
+          from PIL import Image, ImageDraw
+          src = Image.open('assets/icon.png').convert('RGBA')
+          res = 'android/app/src/main/res'
+          dens = {'mdpi': 1, 'hdpi': 1.5, 'xhdpi': 2, 'xxhdpi': 3, 'xxxhdpi': 4}
+          for d, k in dens.items():
+              folder = f'{res}/mipmap-{d}'
+              os.makedirs(folder, exist_ok=True)
+              legacy = int(48 * k)
+              img = src.resize((legacy, legacy), Image.LANCZOS)
+              img.save(f'{folder}/ic_launcher.png')
+              mask = Image.new('L', (legacy, legacy), 0)
+              ImageDraw.Draw(mask).ellipse((0, 0, legacy - 1, legacy - 1), fill=255)
+              rnd = img.copy(); rnd.putalpha(mask)
+              rnd.save(f'{folder}/ic_launcher_round.png')
+              full = int(108 * k)
+              inner = int(full * 0.66)
+              fg = Image.new('RGBA', (full, full), (0, 0, 0, 0))
+              fg.paste(src.resize((inner, inner), Image.LANCZOS), ((full - inner) // 2, (full - inner) // 2))
+              fg.save(f'{folder}/ic_launcher_foreground.png')
+          open(f'{res}/values/ic_launcher_background.xml', 'w').write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#FCFBFA</color>\n</resources>\n')
+          EOF
+
       - name: Build debug APK
         working-directory: android
         run: |
