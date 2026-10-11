@@ -27,8 +27,8 @@
   --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;height:100%;background:#FCFBFA}
-body{margin:0;min-height:100%;min-height:100dvh;color:var(--ink);font:14px/1.55 var(--sans);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;background:var(--bg);overscroll-behavior-y:none}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;height:100%;background:#FCFBFA;overflow-x:hidden;max-width:100%}
+body{margin:0;width:100%;max-width:100%;overflow-wrap:break-word;min-height:100%;min-height:100dvh;color:var(--ink);font:14px/1.55 var(--sans);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;background:var(--bg);overscroll-behavior-y:none}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 button:disabled{opacity:.42;cursor:not-allowed}
@@ -45,10 +45,11 @@ svg{display:block;flex:none}
 ::selection{background:var(--accent-pale);color:var(--on-pale)}
 
 /* ---------- shell ---------- */
-.app{min-height:100%;min-height:100dvh}
+.app{min-height:100%;min-height:100dvh;max-width:100%}
 .sidebar{display:none}
-.main{min-width:0;padding:0 16px calc(150px + env(safe-area-inset-bottom))}
-.frame{max-width:1080px;margin:auto}
+.main{min-width:0;max-width:100%;padding:0 16px calc(150px + env(safe-area-inset-bottom))}
+.frame{max-width:1080px;margin:auto;min-width:0}
+.view{min-width:0}
 .header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 -16px 8px;padding:calc(12px + env(safe-area-inset-top)) 16px 10px;background:rgba(251,250,248,.96);border-bottom:1px solid var(--line)}
 .header-left{display:flex;align-items:center;gap:10px}
 .brandmobile,.brand-title{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1;letter-spacing:-.4px;color:var(--ink)}
@@ -113,8 +114,9 @@ svg{display:block;flex:none}
 .hero-quick button:active{transform:scale(.94)}
 
 /* ---------- panels & task list with subtasks ---------- */
-.home-layout{display:grid;gap:14px}
-.home-left,.home-right{display:grid;align-content:start;gap:14px;min-width:0}
+.home-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
+.home-left,.home-right{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:14px;min-width:0}
+.home-layout>*,.home-left>*,.home-right>*,.calendar-layout>*,.competition-list>*{min-width:0}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1)}
 .panel-pad{padding:18px}
 .metric-line{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
@@ -126,9 +128,9 @@ svg{display:block;flex:none}
 .tick .icon{width:13px;height:13px;stroke-width:3}
 .tick.done{background:var(--accent);border-color:var(--accent);animation:pop .3s var(--ease)}
 .item-text{min-width:0;flex:1}
-.item-text strong{display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:14px;font-weight:700;color:var(--ink)}
+.item-text strong{display:block;white-space:normal;overflow-wrap:anywhere;word-break:break-word;font-size:14px;font-weight:700;color:var(--ink)}
 .item-text strong.finished{text-decoration:line-through;color:var(--subtle)}
-.row-sub{color:var(--muted);font-size:12px;margin-top:3px}
+.row-sub{color:var(--muted);font-size:12px;margin-top:3px;overflow-wrap:anywhere}
 .tail{font-size:11px;font-weight:800;color:var(--accent);background:var(--accent-pale);padding:3px 8px;border-radius:999px;white-space:nowrap;margin-top:2px}
 .row-open{flex:none;border:0;background:transparent;width:34px;height:34px;margin-top:-2px;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--subtle);transition:background .2s,color .2s}
 .row-open:hover{background:var(--bg-2);color:var(--ink)}
@@ -140,7 +142,7 @@ svg{display:block;flex:none}
 .sub-tick:hover{border-color:var(--accent)}
 .sub-tick.done{background:var(--accent);border-color:var(--accent)}
 .sub-tick .icon{width:11px;height:11px;stroke-width:3}
-.sub-title{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub-title{min-width:0;flex:1;white-space:normal;overflow-wrap:anywhere}
 .sub-title.done{text-decoration:line-through;color:var(--subtle)}
 
 .agenda-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -152,7 +154,7 @@ svg{display:block;flex:none}
 .daybox strong{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1;color:var(--ink)}
 .daybox.trophy{background:var(--accent-pale);color:var(--accent);border-color:transparent}
 .agenda-info{min-width:0;flex:1}
-.agenda-info strong{display:block;font-size:13.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .2s}
+.agenda-info strong{display:block;font-size:13.5px;font-weight:700;white-space:normal;overflow-wrap:anywhere;word-break:break-word;transition:color .2s}
 .agenda-info .row-sub{display:block}
 .type-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:1px;background:var(--blue)}
 .type-dot.task{background:var(--blue)}.type-dot.exam{background:var(--amber)}.type-dot.study{background:var(--green)}.type-dot.competition{background:var(--purple)}.type-dot.event{background:var(--rose)}
@@ -183,7 +185,7 @@ svg{display:block;flex:none}
 .filterchip{flex:none;display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);font-size:12px;font-weight:700;color:var(--ink-2);transition:background .2s,color .2s}
 .filterchip.off{background:transparent;color:var(--subtle);border-style:dashed}
 .filterchip.off .type-dot{opacity:.35}
-.calendar-layout{display:grid;gap:14px}
+.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
 .cal-panel{padding:16px 10px 12px}
 .cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 6px 14px}
 .cal-toolbar h2{font-size:28px}
@@ -211,11 +213,12 @@ svg{display:block;flex:none}
 .weekday-note{color:var(--subtle);font-size:10px}
 
 /* ---------- competitions ---------- */
-.competition-list{display:grid;gap:14px}
+.competition-list{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
 .competition-card{position:relative;overflow:hidden;padding:22px 18px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-2)}
 .competition-card::before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--accent),var(--purple),#ff8fbd)}
 .competition-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.competition-top h2{font-size:28px}
+.competition-top>div:first-child{min-width:0;flex:1}
+.competition-top h2{font-size:28px;overflow-wrap:anywhere}
 .competition-meta{font-size:12px;color:var(--muted);margin-top:4px}
 .pill{padding:5px 11px;font-size:11px;font-weight:800;border-radius:999px;background:var(--bg-2);color:var(--muted);white-space:nowrap}
 .pill.on{background:#dcf5ec;color:#0f7a5e}
@@ -384,7 +387,7 @@ svg{display:block;flex:none}
   .cal-dots{justify-content:flex-start;padding-left:4px}
 }
 @media(min-width:1100px){
-  .home-layout,.calendar-layout{grid-template-columns:minmax(0,1.3fr) minmax(300px,.85fr);gap:20px}
+  .home-layout,.calendar-layout{grid-template-columns:minmax(0,1.3fr) minmax(0,.85fr);gap:20px}
   .home-left,.home-right{gap:20px}
 }
 @media(prefers-reduced-motion:reduce){
