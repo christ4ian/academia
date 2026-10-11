@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+package-lock.json.backup
+
+# Capacitor & Android build artifacts
+android/
+www/
+dist/
+build/
+.gradle/
+local.properties
+*.apk
+*.aab
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.log
+.idea/
+.vscode/
+
+# Secrets & Environment variables
+.env
+.env.*
+*.key
+*.keystore
+*.jks
