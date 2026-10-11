@@ -241,37 +241,37 @@ svg{display:block;flex:none}
 .comp-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:10px;margin-top:8px}
 .comp-bottom .tiny{max-width:70%;line-height:1.4}
 
-/* ---------- modal (bottom sheet on mobile with keyboard-aware layout) ---------- */
-.modal-wrap{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overscroll-behavior:contain}
+/* ---------- modal (top-aligned full sheet on mobile for optimal keyboard UX) ---------- */
+.modal-wrap{position:fixed;inset:0;z-index:40;display:none;align-items:flex-start;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overscroll-behavior:contain}
 .modal-wrap.show{display:flex;animation:fade .2s var(--ease)}
-.dialog{width:100%;max-height:88dvh;max-height:88vh;display:flex;flex-direction:column;background:var(--surface);border-radius:28px 28px 0 0;padding:12px 20px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(22,20,43,.2);overflow:hidden;box-sizing:border-box}
-.modal-wrap.show .dialog{animation:sheetIn .35s var(--ease)}
-.dialog::before{content:'';display:block;width:38px;height:4px;border-radius:2px;background:#d4d2dd;margin:0 auto 12px;flex:none}
+.dialog{width:100%;height:100%;height:100dvh;max-height:100dvh;display:flex;flex-direction:column;background:var(--surface);border-radius:0;padding:calc(14px + env(safe-area-inset-top)) 20px calc(14px + env(safe-area-inset-bottom));overflow:hidden;box-sizing:border-box}
+.modal-wrap.show .dialog{animation:viewIn .22s var(--ease)}
+.dialog::before{display:none}
 .dialog-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:12px;flex:none}
-.dialog-header h2{font-size:26px}
+.dialog-header h2{font-size:24px}
 .type-select{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;padding:2px 0;flex:none}
 .type-select button{flex:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;transition:background .2s,color .2s}
 .type-select button.active{background:var(--ink);border-color:var(--ink);color:#fff}
 .dialog-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px;overscroll-behavior:contain;scroll-padding-bottom:70px}
-.field{display:grid;gap:5px;margin-bottom:12px}
+.field{display:grid;gap:5px;margin-bottom:12px;align-content:start}
 .field label{color:var(--ink-2);font-size:12px;font-weight:700}
-.field input,.field textarea,.field select,.subtask-edit input[type=text],.stage-edit input{width:100%;min-width:0;border:1.5px solid var(--line-2);border-radius:14px;padding:11px 13px;background:#fff;color:var(--ink);font-size:16px;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
-.field textarea{resize:vertical;min-height:76px}
+.field input:not([type=checkbox]),.field select,.pick-btn{width:100%;min-width:0;height:46px;min-height:46px;border:1.5px solid var(--line-2);border-radius:14px;padding:0 13px;background:#fff;color:var(--ink);font-size:15px;font-weight:500;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
 .field input:focus,.field textarea:focus,.field select:focus,.subtask-edit input[type=text]:focus,.stage-edit input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale);outline:none}
+.field textarea{width:100%;min-width:0;border:1.5px solid var(--line-2);border-radius:14px;padding:11px 13px;background:#fff;color:var(--ink);font-size:15px;resize:vertical;min-height:76px;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
 .field small{color:var(--muted);font-size:11px}
-.fieldrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fieldrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
 .fieldrow.three{grid-template-columns:1fr 1fr}
 .switchrow{display:flex;gap:9px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:13px}
 .subtask-list{display:grid;gap:8px;margin:10px 0}
 .subtask-edit{display:flex;align-items:center;gap:8px}
-.subtask-edit input[type=text]{flex:1;padding:9px 12px}
+.subtask-edit input[type=text]{flex:1;height:42px;padding:0 12px;font-size:14px}
 .subtask-edit input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
 .subtask-edit button{border:0;background:none;color:var(--muted);padding:6px}
 .stages-list{display:grid;gap:10px;margin:10px 0}
 .stage-edit{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 32px;gap:8px;align-items:center}
-.stage-edit input{padding:9px 12px;height:42px}
+.stage-edit input{padding:0 12px;height:42px;min-height:42px;font-size:13.5px}
 .stage-edit input:first-child{grid-column:auto}
-.stage-edit .pick-btn{grid-column:auto;padding:8px 12px;min-height:42px;height:42px;font-size:13.5px}
+.stage-edit .pick-btn{grid-column:auto;padding:0 12px;min-height:42px;height:42px;font-size:13.5px}
 .stage-edit button:not(.pick-btn){grid-column:auto;grid-row:auto;background:transparent;border:0;color:var(--muted);width:32px;height:32px;display:grid;place-items:center}
 .add-inline{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px dashed #c8c5e6;border-radius:14px;background:transparent;color:var(--accent);font-size:13px;font-weight:700;transition:background .2s}
 .add-inline:hover{background:var(--accent-pale)}
@@ -310,9 +310,9 @@ svg{display:block;flex:none}
 
 /* ---------- custom controls (replaces native select / date / time / checkbox / confirm) ---------- */
 .pick-native{display:none!important}
-.pick-btn{width:100%;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:10px 13px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;color:var(--ink);font-size:15px;font-weight:500;text-align:left;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s}
-.pick-btn .pick-val{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pick-btn .pick-val.empty{color:var(--subtle)}
+.pick-btn{width:100%;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;height:46px;min-height:46px;padding:0 13px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;color:var(--ink);font-size:15px;font-weight:500;text-align:left;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s;cursor:pointer}
+.pick-btn .pick-val{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.pick-btn .pick-val.is-empty,.pick-btn .pick-val.empty{color:var(--subtle);padding:0!important;font-size:inherit!important;line-height:inherit!important;text-align:left!important}
 .pick-btn .icon{color:var(--muted);transition:transform .2s var(--ease),color .2s}
 .pick-btn:hover{border-color:var(--accent)}
 .pick-btn.open{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale)}
@@ -435,7 +435,7 @@ input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-sea
   .page-intro{padding:8px 0 26px}
   .panel-pad{padding:22px}
   .modal-wrap{align-items:center;padding:24px}
-  .dialog{width:min(600px,100%);max-height:min(92dvh,900px);border-radius:28px;padding:26px 28px}
+  .dialog{width:min(600px,100%);height:auto;max-height:min(92dvh,900px);border-radius:28px;padding:26px 28px;box-shadow:0 20px 60px -15px rgba(22,20,43,.3)}
   .dialog::before{display:none}
   .field input,.field textarea,.field select,.subtask-edit input[type=text],.stage-edit input,.search{font-size:14px}
   .hero-quick input{font-size:14.5px}
@@ -598,19 +598,19 @@ function renderAIReview(){
 function renderModal(r=null){const current=r||modalDraft||getEditing();document.getElementById('modal-title').textContent=(editing?'Edit ':'Tambah ')+TYPES[modalType];document.getElementById('modal-delete').classList.toggle('hidden',!editing);document.getElementById('modal-types').innerHTML=editing?'':Object.keys(TYPES).map(k=>`<button type="button" data-modal-type="${k}" class="${k===modalType?'active':''}">${TYPES[k]}</button>`).join('');
   let content='';
   if(modalType==='task'){
-    content=formField('Nama tugas *','title',current?.title||'','text','required maxlength="180" placeholder="Misalnya: Latihan soal Kimia"')+`<div class="fieldrow">${formField('Mata pelajaran','subject',current?.subject||'','text','maxlength="80" placeholder="Kimia"')}${formField('Deadline (opsional)','due',current?.due||'','date')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea id="f-notes" name="notes" placeholder="Instruksi atau tautan penting...">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Subtasks</h3><span class="tiny muted">Tidak wajib</span></div>`+subtaskEditors();
+    content=formField('Nama tugas *','title',current?.title||'','text','required maxlength="180" placeholder="Misalnya: Latihan soal Kimia"')+formField('Mata pelajaran','subject',current?.subject||'','text','maxlength="80" placeholder="Kimia"')+formField('Deadline (opsional)','due',current?.due||'','date')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea id="f-notes" name="notes" placeholder="Instruksi atau tautan penting...">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Subtasks</h3><span class="tiny muted">Tidak wajib</span></div>`+subtaskEditors();
   }else if(modalType==='competition'){
     content=formField('Nama lomba *','title',current?.name??current?.title??'','text','required maxlength="160" placeholder="Misalnya: Olimpiade Matematika"')+`<div class="fieldrow">${formField('Bidang','subject',current?.subject||'','text','placeholder="Matematika"')}${selectField('Kategori','mode',[['Individu','Individu'],['Tim','Tim'],['Lainnya','Lainnya']],current?.mode||'Individu')}</div>`+formField('Lokasi / penyelenggara','location',current?.location||'','text','placeholder="Opsional"')+`<div class="field"><label for="f-notes">Catatan</label><textarea name="notes" id="f-notes" placeholder="Ketentuan, link pendaftaran, hal penting">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Timeline lomba</h3><span class="tiny muted">Bisa tambah tahap sebanyak perlu</span></div>`+stageEditors();
   }else if(modalType==='exam'){
     const d=current||{},today=localToday();
-    content=formField('Nama ulangan *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: UH Biologi Sel"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Biologi"')+`<div class="fieldrow">${formField('Tanggal ulangan *','startDate',d.startDate||today,'date','required')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Kisi-kisi atau materi ulangan...">${esc(d.notes||'')}</textarea></div>`;
+    content=formField('Nama ulangan *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: UH Biologi Sel"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Biologi"')+formField('Tanggal ulangan *','startDate',d.startDate||today,'date','required')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Kisi-kisi atau materi ulangan...">${esc(d.notes||'')}</textarea></div>`;
   }else if(modalType==='study'){
     const d=current||{},today=localToday();
     const compOptions=[['','Tidak terhubung'],...db.competitions.map(c=>[c.id,c.name])];
-    content=formField('Sesi belajar *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: Merangkum Sejarah"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Sejarah"')+`<div class="fieldrow">${formField('Tanggal belajar *','startDate',d.startDate||today,'date','required')}</div>`+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+selectField('Terkait lomba (opsional)','competitionId',compOptions,d.competitionId||'')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian materi yang ingin dipelajari...">${esc(d.notes||'')}</textarea></div>`;
+    content=formField('Sesi belajar *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: Merangkum Sejarah"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Sejarah"')+formField('Tanggal belajar *','startDate',d.startDate||today,'date','required')+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+selectField('Terkait lomba (opsional)','competitionId',compOptions,d.competitionId||'')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian materi yang ingin dipelajari...">${esc(d.notes||'')}</textarea></div>`;
   }else{
     const d=current||{},today=localToday();
-    content=formField('Nama acara *','title',d.title||'','text','required maxlength="180" placeholder="Nama acara"')+formField('Keterangan (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Umum"')+`<div class="fieldrow">${formField('Tanggal *','startDate',d.startDate||today,'date','required')}${formField('Tanggal selesai (opsional)','endDate',d.endDate||d.startDate||today,'date')}</div>`+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian acara...">${esc(d.notes||'')}</textarea></div>`;
+    content=formField('Nama acara *','title',d.title||'','text','required maxlength="180" placeholder="Nama acara"')+formField('Keterangan (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Umum"')+formField('Tanggal *','startDate',d.startDate||today,'date','required')+formField('Tanggal selesai (opsional)','endDate',d.endDate||d.startDate||today,'date')+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian acara...">${esc(d.notes||'')}</textarea></div>`;
   }
   document.getElementById('modal-fields').innerHTML=content;enhanceControls(document.getElementById('modal-fields'));
   renderAIReview();
@@ -799,13 +799,17 @@ const picker={el:null,kind:'',y:0,m:0,h:7,mi:0};
 const pickKind=el=>el.tagName==='SELECT'?'select':el.type;
 function pickLabelText(el){
   if(el.tagName==='SELECT'){const o=el.options[el.selectedIndex];return o?o.textContent:''}
-  if(el.type==='date')return parseISO(el.value)?fmt(el.value,{day:'numeric',month:'long',year:'numeric'}):'';
+  if(el.type==='date'){
+    if(!parseISO(el.value))return '';
+    if(el.closest&&el.closest('.stage-edit'))return fmt(el.value,{day:'numeric',month:'short',year:'numeric'});
+    return fmt(el.value,{day:'numeric',month:'long',year:'numeric'});
+  }
   return el.value||'';
 }
 function syncPick(el){
   const b=el&&el._btn;if(!b)return;
   const kind=pickKind(el),txt=pickLabelText(el),ph=kind==='date'?'Pilih tanggal':kind==='time'?'Pilih jam':'Pilih';
-  b.innerHTML=`<span class="pick-val${txt?'':' empty'}">${esc(txt||ph)}</span>${icon(kind==='date'?'calendar':kind==='time'?'clock':'down','sm')}`;
+  b.innerHTML=`<span class="pick-val${txt?'':' is-empty'}">${esc(txt||ph)}</span>${icon(kind==='date'?'calendar':kind==='time'?'clock':'down','sm')}`;
 }
 function enhanceControls(root){
   root.querySelectorAll('select:not([data-enh]),input[type=date]:not([data-enh]),input[type=time]:not([data-enh])').forEach(el=>{
