@@ -271,7 +271,8 @@ svg{display:block;flex:none}
 .stage-edit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:6px}
 .stage-edit input{padding:9px 12px}
 .stage-edit input:first-child{grid-column:1/3}
-.stage-edit button{grid-column:3;grid-row:1;background:transparent;border:0;color:var(--muted)}
+.stage-edit .pick-btn{grid-column:1/3;padding:9px 12px;min-height:0}
+.stage-edit button:not(.pick-btn){grid-column:3;grid-row:1;background:transparent;border:0;color:var(--muted)}
 .add-inline{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px dashed #c8c5e6;border-radius:14px;background:transparent;color:var(--accent);font-size:13px;font-weight:700;transition:background .2s}
 .add-inline:hover{background:var(--accent-pale)}
 .modal-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px;margin-top:8px;background:var(--surface);flex:none;position:sticky;bottom:0;z-index:5}
@@ -306,6 +307,63 @@ svg{display:block;flex:none}
     opacity:0;
   }
 }
+
+/* ---------- custom controls (replaces native select / date / time / checkbox / confirm) ---------- */
+.pick-native{display:none!important}
+.pick-btn{width:100%;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:10px 13px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;color:var(--ink);font-size:15px;font-weight:500;text-align:left;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s}
+.pick-btn .pick-val{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pick-btn .pick-val.empty{color:var(--subtle)}
+.pick-btn .icon{color:var(--muted);transition:transform .2s var(--ease),color .2s}
+.pick-btn:hover{border-color:var(--accent)}
+.pick-btn.open{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale)}
+.pick-btn.open .icon{color:var(--accent)}
+.picker-wrap,.confirm-wrap{position:fixed;inset:0;display:none;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overscroll-behavior:contain}
+.picker-wrap{z-index:55;align-items:flex-end}
+.confirm-wrap{z-index:58;align-items:center;padding:24px}
+.picker-wrap.show,.confirm-wrap.show{display:flex;animation:fade .2s var(--ease)}
+.picker{width:100%;max-width:440px;max-height:82dvh;max-height:82vh;display:flex;flex-direction:column;background:var(--surface);border-radius:28px 28px 0 0;padding:12px 18px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(22,20,43,.2);box-sizing:border-box;overflow:hidden}
+.picker-wrap.show .picker{animation:sheetIn .3s var(--ease)}
+.picker::before{content:'';display:block;width:38px;height:4px;border-radius:2px;background:#d4d2dd;margin:0 auto 10px;flex:none}
+.picker-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;flex:none}
+.picker-head h3{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:-.2px;min-width:0;overflow-wrap:anywhere}
+.picker-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.picker-foot{display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);flex:none}
+.picker-foot:empty{display:none}
+.pk-list{display:grid;gap:4px}
+.pk-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:14px 14px;border:0;border-radius:14px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;text-align:left;transition:background .15s}
+.pk-opt span{min-width:0;overflow-wrap:anywhere}
+.pk-opt:hover{background:var(--bg)}
+.pk-opt.sel{background:var(--accent-pale);color:var(--on-pale)}
+.pk-opt .icon{color:var(--accent)}
+.dp-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 2px 10px}
+.dp-month{font-family:var(--serif);font-weight:400;font-size:24px}
+.dp-week,.dp-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.dp-week{text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--subtle);padding-bottom:6px}
+.dp-cell{height:42px;border:0;border-radius:50%;background:transparent;color:var(--ink);font-size:14px;font-weight:700;display:grid;place-items:center;transition:background .15s,color .15s,transform .12s}
+.dp-cell:hover{background:var(--bg-2)}
+.dp-cell:active{transform:scale(.92)}
+.dp-cell.out{opacity:.32}
+.dp-cell.today{box-shadow:inset 0 0 0 1.8px var(--accent)}
+.dp-cell.sel{background:var(--accent);color:#fff;box-shadow:none;opacity:1}
+.tp-cols{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.tp-sep{font-family:var(--serif);font-size:32px;color:var(--muted)}
+.tp-col{position:relative;height:236px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:grid;gap:3px;align-content:start;padding:4px;border-radius:18px;background:var(--bg);scrollbar-width:none}
+.tp-col::-webkit-scrollbar{display:none}
+.tp-item{height:44px;flex:none;border:0;border-radius:12px;background:transparent;color:var(--ink-2);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;transition:background .15s,color .15s}
+.tp-item:hover{background:var(--bg-2)}
+.tp-item.sel{background:var(--accent);color:#fff}
+.confirm{width:min(380px,100%);background:var(--surface);border-radius:26px;padding:24px 22px 18px;box-shadow:0 24px 60px -12px rgba(22,20,43,.35);animation:rise .25s var(--ease)}
+.confirm h2{font-size:26px;margin-bottom:8px}
+.confirm p{color:var(--muted);font-size:14px;line-height:1.55;overflow-wrap:anywhere}
+.confirm-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.confirm-actions button{flex:1}
+.primary.dangerfill{background:var(--red);box-shadow:0 3px 10px -2px rgba(192,60,79,.35)}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;width:20px;height:20px;flex:none;margin:0;border:1.8px solid var(--subtle);border-radius:6px;background:#fff;display:inline-grid;place-content:center;cursor:pointer;transition:background .15s,border-color .15s}
+input[type=checkbox]::after{content:'';width:10px;height:5px;border-left:2.4px solid #fff;border-bottom:2.4px solid #fff;transform:translateY(-1px) rotate(-45deg) scale(0);transition:transform .15s var(--ease)}
+input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+input[type=checkbox]:checked::after{transform:translateY(-1px) rotate(-45deg) scale(1)}
+input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+@media(min-width:900px){.picker-wrap{align-items:center;padding:24px}.picker{border-radius:28px;max-width:380px}.pick-btn{font-size:14px}}
 
 /* ---------- motion ---------- */
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -342,8 +400,8 @@ svg{display:block;flex:none}
   .competition-card{padding:24px 24px 16px}
   .timeline-scroll{margin:0 -24px;padding:22px 24px 8px}
   .stage{width:148px}
-  .stage-edit{grid-template-columns:minmax(0,1.2fr) minmax(0,.95fr) minmax(0,.75fr) 32px}
-  .stage-edit input:first-child,.stage-edit button{grid-column:auto;grid-row:auto}
+  .stage-edit{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 32px}
+  .stage-edit input:first-child,.stage-edit button:not(.pick-btn),.stage-edit .pick-btn{grid-column:auto;grid-row:auto}
   .fieldrow.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 
@@ -430,11 +488,14 @@ svg{display:block;flex:none}
 <p id="gemini-settings-feedback" class="ai-note" role="status"></p>
 <div class="ai-settings-actions"><button type="button" class="ghost destructive" id="gemini-forget">Hapus key</button><div class="ai-btn-group"><button type="button" class="secondary" id="gemini-test">Uji koneksi</button><button type="submit" class="primary">Simpan</button></div></div>
 </form></section></div>
+<div class="picker-wrap" id="picker-wrap" role="presentation"><section class="picker" id="picker" role="dialog" aria-modal="true" aria-labelledby="picker-title"><div class="picker-head"><h3 id="picker-title"></h3><button type="button" class="iconbtn" id="picker-close" aria-label="Tutup"></button></div><div class="picker-body" id="picker-body"></div><div class="picker-foot" id="picker-foot"></div></section></div>
+<div class="confirm-wrap" id="confirm-wrap" role="presentation"><section class="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-msg"><h2 id="confirm-title"></h2><p id="confirm-msg"></p><div class="confirm-actions"><button type="button" class="secondary" id="confirm-no">Batal</button><button type="button" class="primary" id="confirm-yes">Lanjutkan</button></div></section></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div><input type="file" id="import-input" accept="application/json,.json" class="hidden">
 <script src="gemini-quickadd.js"></script>
 <script>
 'use strict';
 const ICON={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',tasks:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="m7 10 2 2 3-3M14 10h4M7 16h11"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',trophy:'<path d="M8 3h8v7a4 4 0 0 1-8 0zM8 5H4v3a4 4 0 0 0 4 4M16 5h4v3a4 4 0 0 1-4 4M12 14v5M8 21h8M9 19h6"/>',plus:'<path d="M12 5v14M5 12h14"/>',arrow:'<path d="M5 12h14m-7-7 7 7-7 7"/>',right:'<path d="m9 18 6-6-6-6"/>',left:'<path d="m15 18-6-6 6-6"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l-1.7 1.7a1.8 1.8 0 0 0-2-.4l-1 .4a1.8 1.8 0 0 0-1.1 1.6h-2.4a1.8 1.8 0 0 0-1.1-1.6l-1-.4a1.8 1.8 0 0 0-2 .4l-1.7-1.7a1.8 1.8 0 0 0 .4-2l-.4-1A1.8 1.8 0 0 0 4 12.9v-2.4a1.8 1.8 0 0 0 1.6-1.1l.4-1a1.8 1.8 0 0 0-.4-2l1.7-1.7a1.8 1.8 0 0 0 2 .4l1-.4A1.8 1.8 0 0 0 11.4 3h2.4a1.8 1.8 0 0 0 1.1 1.6l1 .4a1.8 1.8 0 0 0 2-.4l1.7 1.7a1.8 1.8 0 0 0-.4 2l.4 1a1.8 1.8 0 0 0 1.6 1.1v2.4a1.8 1.8 0 0 0-1.6 1.1z"/>',check:'<path d="m5 12 4 4L19 6"/>',close:'<path d="M18 6 6 18M6 6l12 12"/>',more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',book:'<path d="M4 4.5C7 3 10 3 12 5c2-2 5-2 8-.5V20c-3-1.5-6-1.5-8 .5-2-2-5-2-8-.5zM12 5v15"/>',repeat:'<path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/>',flag:'<path d="M5 21V4m0 1c6-3 8 3 14 0v10c-6 3-8-3-14 0"/>',filter:'<path d="M4 5h16M7 12h10M10 19h4"/>',spark:'<path d="m12 2 2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/>',file:'<path d="M5 3h10l4 4v14H5zM15 3v5h4M8 12h8M8 16h8"/>',layers:'<path d="m12 3 9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/>'};
+ICON.down='<path d="m6 9 6 6 6-6"/>';
 const icon=(name,cl='')=>`<svg class="icon ${cl}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]||ICON.file}</svg>`;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>globalThis.crypto?.randomUUID?.()||'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
@@ -523,7 +584,7 @@ function modalOpen(type='task',record=null){
   }
 }
 function modalClose(){aiReviewWarnings=null;document.getElementById('modal-wrap').classList.remove('show');document.body.style.overflow='';editing=null;modalDraft=null}
-const formField=(label,name,value='',type='text',props='')=>`<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" enterkeyhint="next" ${props}></div>`;
+const formField=(label,name,value='',type='text',props='')=>`<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" enterkeyhint="next" autocomplete="off" ${props}></div>`;
 const selectField=(label,name,items,value='')=>`<div class="field"><label for="f-${name}">${label}</label><select id="f-${name}" name="${name}">${items.map(([v,n])=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(n)}</option>`).join('')}</select></div>`;
 function subtaskEditors(){return `<div class="subtask-list" id="subtask-editors">${draftSubtasks.map((s,i)=>`<div class="subtask-edit"><input type="checkbox" data-subtask-check="${i}" ${s.done?'checked':''} aria-label="Status subtugas"><input type="text" data-subtask-text="${i}" value="${esc(s.title)}" placeholder="Nama subtugas" maxlength="120"><button type="button" title="Hapus subtugas" data-subtask-remove="${i}">${icon('close','sm')}</button></div>`).join('')}</div><button class="add-inline" type="button" id="add-subtask">${icon('plus','sm')} Tambah subtask (opsional)</button>`}
 function stageEditors(){return `<div class="stages-list" id="stage-editors">${draftStages.map((s,i)=>`<div class="stage-edit"><input type="text" data-stage-title="${i}" value="${esc(s.title)}" placeholder="Nama tahap" aria-label="Nama tahapan ${i+1}" maxlength="80"><input type="date" data-stage-date="${i}" value="${esc(s.date||'')}" aria-label="Tanggal tahapan ${i+1}"><button title="Hapus tahap" type="button" data-stage-remove="${i}">${icon('close','sm')}</button></div>`).join('')}</div><button class="add-inline" id="add-stage" type="button">${icon('plus','sm')} Tambah tahapan</button><div class="tiny muted" style="margin-top:8px">Isi nama dan tanggal setiap tahap. Semua tahap muncul di kalender.</div>`}
@@ -539,7 +600,7 @@ function renderModal(r=null){const current=r||modalDraft||getEditing();document.
   if(modalType==='task'){
     content=formField('Nama tugas *','title',current?.title||'','text','required maxlength="180" placeholder="Misalnya: Latihan soal Kimia"')+`<div class="fieldrow">${formField('Mata pelajaran','subject',current?.subject||'','text','maxlength="80" placeholder="Kimia"')}${formField('Deadline (opsional)','due',current?.due||'','date')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea id="f-notes" name="notes" placeholder="Instruksi atau tautan penting...">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Subtasks</h3><span class="tiny muted">Tidak wajib</span></div>`+subtaskEditors();
   }else if(modalType==='competition'){
-    content=formField('Nama lomba *','title',current?.name||'','text','required maxlength="160" placeholder="Misalnya: Olimpiade Matematika"')+`<div class="fieldrow">${formField('Bidang','subject',current?.subject||'','text','placeholder="Matematika"')}${selectField('Kategori','mode',[['Individu','Individu'],['Tim','Tim'],['Lainnya','Lainnya']],current?.mode||'Individu')}</div>`+formField('Lokasi / penyelenggara','location',current?.location||'','text','placeholder="Opsional"')+`<div class="field"><label for="f-notes">Catatan</label><textarea name="notes" id="f-notes" placeholder="Ketentuan, link pendaftaran, hal penting">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Timeline lomba</h3><span class="tiny muted">Bisa tambah tahap sebanyak perlu</span></div>`+stageEditors();
+    content=formField('Nama lomba *','title',current?.name??current?.title??'','text','required maxlength="160" placeholder="Misalnya: Olimpiade Matematika"')+`<div class="fieldrow">${formField('Bidang','subject',current?.subject||'','text','placeholder="Matematika"')}${selectField('Kategori','mode',[['Individu','Individu'],['Tim','Tim'],['Lainnya','Lainnya']],current?.mode||'Individu')}</div>`+formField('Lokasi / penyelenggara','location',current?.location||'','text','placeholder="Opsional"')+`<div class="field"><label for="f-notes">Catatan</label><textarea name="notes" id="f-notes" placeholder="Ketentuan, link pendaftaran, hal penting">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Timeline lomba</h3><span class="tiny muted">Bisa tambah tahap sebanyak perlu</span></div>`+stageEditors();
   }else if(modalType==='exam'){
     const d=current||{},today=localToday();
     content=formField('Nama ulangan *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: UH Biologi Sel"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Biologi"')+`<div class="fieldrow">${formField('Tanggal ulangan *','startDate',d.startDate||today,'date','required')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Kisi-kisi atau materi ulangan...">${esc(d.notes||'')}</textarea></div>`;
@@ -551,7 +612,7 @@ function renderModal(r=null){const current=r||modalDraft||getEditing();document.
     const d=current||{},today=localToday();
     content=formField('Nama acara *','title',d.title||'','text','required maxlength="180" placeholder="Nama acara"')+formField('Keterangan (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Umum"')+`<div class="fieldrow">${formField('Tanggal *','startDate',d.startDate||today,'date','required')}${formField('Tanggal selesai (opsional)','endDate',d.endDate||d.startDate||today,'date')}</div>`+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian acara...">${esc(d.notes||'')}</textarea></div>`;
   }
-  document.getElementById('modal-fields').innerHTML=content;
+  document.getElementById('modal-fields').innerHTML=content;enhanceControls(document.getElementById('modal-fields'));
   renderAIReview();
 }
 function showAIReview(result){
@@ -603,7 +664,7 @@ async function handleQuickAdd(){
 function showAISettings(){
   const dialog=document.getElementById('ai-settings-wrap');
   document.getElementById('gemini-api-key').value=AcademiaGemini.getKey();
-  document.getElementById('gemini-model').value=AcademiaGemini.getModel();
+  document.getElementById('gemini-model').value=AcademiaGemini.getModel();syncPick(document.getElementById('gemini-model'));
   document.getElementById('gemini-persist').checked=AcademiaGemini.isPersistent();
   document.getElementById('gemini-settings-feedback').textContent='';
   dialog.classList.add('show');document.body.style.overflow='hidden';
@@ -677,7 +738,7 @@ function quickSave(input){const p=quickParse(input);if(!p.title)return;
   }
   save();render();toast('Ditambahkan. Ketuk aktivitas untuk mengubah detailnya.')}
 function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`academia-backup-${localToday()}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('Cadangan JSON siap.')}
-function importJSON(file){if(file.size>3e6){toast('File terlalu besar.');return}const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);if(!d||!Array.isArray(d.tasks)||!Array.isArray(d.activities)||!Array.isArray(d.competitions))throw Error('format');if(!confirm('Impor ini akan mengganti semua data Academia di perangkat ini. Lanjutkan?'))return;db={version:3,settings:{},tasks:d.tasks.filter(x=>typeof x.id==='string'&&typeof x.title==='string').map(x=>({...x,subtasks:Array.isArray(x.subtasks)?x.subtasks:[]})),activities:d.activities.filter(x=>typeof x.id==='string'&&typeof x.title==='string'&&['study','exam','event'].includes(x.type)),competitions:d.competitions.filter(x=>typeof x.id==='string'&&typeof x.name==='string').map(x=>({...x,stages:Array.isArray(x.stages)?x.stages:[]}))};save();render();toast('Data berhasil diimpor.')}catch(err){toast('Format cadangan tidak valid.')}};reader.readAsText(file)}
+function importJSON(file){if(file.size>3e6){toast('File terlalu besar.');return}const reader=new FileReader();reader.onload=async()=>{try{const d=JSON.parse(reader.result);if(!d||!Array.isArray(d.tasks)||!Array.isArray(d.activities)||!Array.isArray(d.competitions))throw Error('format');if(!await askConfirm('Impor ini akan mengganti semua data Academia di perangkat ini. Lanjutkan?',{title:'Impor cadangan',ok:'Impor',danger:true}))return;db={version:3,settings:{},tasks:d.tasks.filter(x=>typeof x.id==='string'&&typeof x.title==='string').map(x=>({...x,subtasks:Array.isArray(x.subtasks)?x.subtasks:[]})),activities:d.activities.filter(x=>typeof x.id==='string'&&typeof x.title==='string'&&['study','exam','event'].includes(x.type)),competitions:d.competitions.filter(x=>typeof x.id==='string'&&typeof x.name==='string').map(x=>({...x,stages:Array.isArray(x.stages)?x.stages:[]}))};save();render();toast('Data berhasil diimpor.')}catch(err){toast('Format cadangan tidak valid.')}};reader.readAsText(file)}
 function onClick(e){const closest=selector=>e.target.closest(selector);
   const nav=closest('[data-view]');if(nav){e.preventDefault();go(nav.dataset.view);return}
   const filter=closest('[data-task-filter]');if(filter){taskFilter=filter.dataset.taskFilter;renderTasks();return}
@@ -698,9 +759,9 @@ function onClick(e){const closest=selector=>e.target.closest(selector);
   const rmStage=closest('[data-stage-remove]');if(rmStage){captureDraftForm();commitDraftInputs();draftStages.splice(Number(rmStage.dataset.stageRemove),1);renderModal();return}
   if(closest('#modal-close')||closest('#modal-cancel')){modalClose();return}
   if(e.target.id==='modal-wrap'){modalClose();return}
-  if(closest('#modal-delete')){if(!editing)return;if(!confirm('Hapus catatan ini?'))return;const id=editing;if(modalType==='task')db.tasks=db.tasks.filter(x=>x.id!==id);else if(modalType==='competition'){db.competitions=db.competitions.filter(x=>x.id!==id);db.activities=db.activities.map(x=>x.competitionId===id?{...x,competitionId:''}:x)}else db.activities=db.activities.filter(x=>x.id!==id);save();modalClose();render();toast('Catatan dihapus.');return}
+  if(closest('#modal-delete')){if(!editing)return;const id=editing,mt=modalType;askConfirm('Catatan ini akan dihapus permanen.',{title:'Hapus catatan?',ok:'Hapus',danger:true}).then(ok=>{if(!ok)return;if(mt==='task')db.tasks=db.tasks.filter(x=>x.id!==id);else if(mt==='competition'){db.competitions=db.competitions.filter(x=>x.id!==id);db.activities=db.activities.map(x=>x.competitionId===id?{...x,competitionId:''}:x)}else db.activities=db.activities.filter(x=>x.id!==id);save();modalClose();render();toast('Catatan dihapus.')});return}
   if(closest('#settings-button')){document.getElementById('settings-menu').classList.toggle('show');return}
-  const action=closest('[data-action]');if(action){document.getElementById('settings-menu').classList.remove('show');switch(action.dataset.action){case'ai-settings':showAISettings();break;case'export':exportJSON();break;case'import':document.getElementById('import-input').click();break;case'empty':if(confirm('Kosongkan semua data demo? Unduh cadangan jika ingin menyimpan data sekarang.')){db={version:3,settings:{},tasks:[],activities:[],competitions:[]};save();render();toast('Workspace kosong, siap kamu isi.')}break;case'reset':if(confirm('Pulihkan data contoh? Ini akan mengganti catatan sekarang.')){db=example();save();render();toast('Data contoh dipulihkan.')}break}return}
+  const action=closest('[data-action]');if(action){document.getElementById('settings-menu').classList.remove('show');switch(action.dataset.action){case'ai-settings':showAISettings();break;case'export':exportJSON();break;case'import':document.getElementById('import-input').click();break;case'empty':askConfirm('Kosongkan semua data demo? Unduh cadangan jika ingin menyimpan data sekarang.',{title:'Mulai dari kosong?',ok:'Kosongkan',danger:true}).then(ok=>{if(ok){db={version:3,settings:{},tasks:[],activities:[],competitions:[]};save();render();toast('Workspace kosong, siap kamu isi.')}});break;case'reset':askConfirm('Pulihkan data contoh? Ini akan mengganti catatan sekarang.',{title:'Pulihkan data contoh?',ok:'Pulihkan',danger:true}).then(ok=>{if(ok){db=example();save();render();toast('Data contoh dipulihkan.')}});break}return}
   if(!closest('#settings-menu'))document.getElementById('settings-menu').classList.remove('show');
 }
 document.addEventListener('click',onClick);
@@ -729,6 +790,95 @@ document.getElementById('gemini-test').addEventListener('click',async()=>{
   }catch(err){status.textContent='Uji koneksi gagal: '+err.message}finally{button.disabled=false}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('ai-settings-wrap').classList.contains('show'))closeAISettings()});
+
+/* ---------- Custom pickers (select / date / time) & confirm dialog ----------
+   Native <select>, <input type=date|time> stay in the DOM (hidden) as the value store so FormData keeps working;
+   a styled trigger button + bottom-sheet picker is rendered in their place. */
+const gid=id=>document.getElementById(id);
+const picker={el:null,kind:'',y:0,m:0,h:7,mi:0};
+const pickKind=el=>el.tagName==='SELECT'?'select':el.type;
+function pickLabelText(el){
+  if(el.tagName==='SELECT'){const o=el.options[el.selectedIndex];return o?o.textContent:''}
+  if(el.type==='date')return parseISO(el.value)?fmt(el.value,{day:'numeric',month:'long',year:'numeric'}):'';
+  return el.value||'';
+}
+function syncPick(el){
+  const b=el&&el._btn;if(!b)return;
+  const kind=pickKind(el),txt=pickLabelText(el),ph=kind==='date'?'Pilih tanggal':kind==='time'?'Pilih jam':'Pilih';
+  b.innerHTML=`<span class="pick-val${txt?'':' empty'}">${esc(txt||ph)}</span>${icon(kind==='date'?'calendar':kind==='time'?'clock':'down','sm')}`;
+}
+function enhanceControls(root){
+  root.querySelectorAll('select:not([data-enh]),input[type=date]:not([data-enh]),input[type=time]:not([data-enh])').forEach(el=>{
+    el.dataset.enh='1';el.dataset.req=el.required?'1':'';el.required=false;el.classList.add('pick-native');el.tabIndex=-1;
+    const b=document.createElement('button');b.type='button';b.className='pick-btn';b.setAttribute('aria-haspopup','dialog');
+    const lab=el.id?document.querySelector('label[for="'+el.id+'"]'):null;
+    b.setAttribute('aria-label',((lab&&lab.textContent)||el.getAttribute('aria-label')||'Pilih').replace(/\s*\*\s*$/,''));
+    b._el=el;el._btn=b;el.after(b);syncPick(el);
+  });
+}
+function pickerOpen(el){
+  if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
+  picker.el=el;picker.kind=pickKind(el);
+  gid('picker-title').textContent=el._btn.getAttribute('aria-label');
+  if(picker.kind==='date'){const d=parseISO(el.value)||parseISO(localToday());picker.y=d.getFullYear();picker.m=d.getMonth();renderDatePicker()}
+  else if(picker.kind==='time'){const v=/^(\d{2}):(\d{2})$/.exec(el.value),n=new Date();picker.h=v?+v[1]:n.getHours();picker.mi=v?+v[2]:n.getMinutes();renderTimePicker()}
+  else renderSelectPicker();
+  el._btn.classList.add('open');gid('picker-wrap').classList.add('show');
+  if(picker.kind==='time')document.querySelectorAll('#picker-body .tp-col').forEach(c=>{const s=c.querySelector('.sel');if(s)c.scrollTop=s.offsetTop-(c.clientHeight-s.offsetHeight)/2});
+  else if(picker.kind==='select')gid('picker-body').querySelector('.pk-opt.sel')?.scrollIntoView({block:'center'});
+}
+function pickerClose(){gid('picker-wrap').classList.remove('show');if(picker.el&&picker.el._btn)picker.el._btn.classList.remove('open');picker.el=null}
+function pickerSet(v){const el=picker.el;if(!el)return;el.value=v;syncPick(el);el.dispatchEvent(new Event('change',{bubbles:true}));pickerClose()}
+function renderSelectPicker(){
+  const el=picker.el;
+  gid('picker-body').innerHTML='<div class="pk-list">'+[...el.options].map(o=>{const on=o.value===el.value;return `<button type="button" class="pk-opt${on?' sel':''}" data-pk-val="${esc(o.value)}"><span>${esc(o.textContent)}</span>${on?icon('check','sm'):''}</button>`}).join('')+'</div>';
+  gid('picker-foot').innerHTML='';
+}
+function renderDatePicker(){
+  const {y,m,el}=picker,cur=el.value,today=localToday(),offset=(new Date(y,m,1).getDay()+6)%7;let cells='';
+  for(let i=0;i<42;i++){const d=new Date(y,m,1-offset+i,12),iso=toISO(d);cells+=`<button type="button" class="dp-cell${d.getMonth()!==m?' out':''}${iso===cur?' sel':''}${iso===today?' today':''}" data-pk-date="${iso}" aria-label="${fmtFull(iso)}">${d.getDate()}</button>`}
+  gid('picker-body').innerHTML=`<div class="dp-top"><strong class="dp-month">${MONTHS[m]} ${y}</strong><div class="cal-nav"><button type="button" class="iconbtn" data-pk-shift="-1" aria-label="Bulan sebelumnya">${icon('left','sm')}</button><button type="button" class="iconbtn" data-pk-shift="1" aria-label="Bulan berikutnya">${icon('right','sm')}</button></div></div><div class="dp-week">${['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(s=>`<span>${s}</span>`).join('')}</div><div class="dp-grid">${cells}</div>`;
+  gid('picker-foot').innerHTML=(el.dataset.req?'':'<button type="button" class="ghost destructive" data-pk-clear>Hapus</button>')+'<button type="button" class="secondary" data-pk-today>Hari ini</button>';
+}
+function renderTimePicker(){
+  const col=(n,sel,attr)=>'<div class="tp-col">'+Array.from({length:n},(_,i)=>`<button type="button" class="tp-item${i===sel?' sel':''}" ${attr}="${i}">${pad(i)}</button>`).join('')+'</div>';
+  gid('picker-body').innerHTML=`<div class="tp-cols">${col(24,picker.h,'data-pk-h')}<span class="tp-sep">:</span>${col(60,picker.mi,'data-pk-mi')}</div>`;
+  gid('picker-foot').innerHTML=(picker.el.dataset.req?'':'<button type="button" class="ghost destructive" data-pk-clear>Hapus</button>')+'<button type="button" class="primary" data-pk-timeok>Selesai</button>';
+}
+document.addEventListener('click',e=>{
+  const t=e.target,c=s=>t.closest(s);
+  const pb=c('.pick-btn');if(pb&&pb._el){e.preventDefault();pickerOpen(pb._el);return}
+  if(!gid('picker-wrap').classList.contains('show'))return;
+  if(t.id==='picker-wrap'||c('#picker-close')){pickerClose();return}
+  let n;
+  if(n=c('[data-pk-val]')){pickerSet(n.dataset.pkVal);return}
+  if(n=c('[data-pk-date]')){pickerSet(n.dataset.pkDate);return}
+  if(n=c('[data-pk-shift]')){const d=new Date(picker.y,picker.m+Number(n.dataset.pkShift),1);picker.y=d.getFullYear();picker.m=d.getMonth();renderDatePicker();return}
+  if(c('[data-pk-today]')){pickerSet(localToday());return}
+  if(c('[data-pk-clear]')){pickerSet('');return}
+  if(n=c('[data-pk-h]')){picker.h=Number(n.dataset.pkH);n.parentNode.querySelector('.sel')?.classList.remove('sel');n.classList.add('sel');return}
+  if(n=c('[data-pk-mi]')){picker.mi=Number(n.dataset.pkMi);n.parentNode.querySelector('.sel')?.classList.remove('sel');n.classList.add('sel');return}
+  if(c('[data-pk-timeok]')){pickerSet(pad(picker.h)+':'+pad(picker.mi));return}
+});
+let confirmResolve=null;
+function confirmDone(v){gid('confirm-wrap').classList.remove('show');const r=confirmResolve;confirmResolve=null;if(r)r(v)}
+function askConfirm(msg,{title='Konfirmasi',ok='Lanjutkan',danger=false}={}){
+  if(confirmResolve)confirmDone(false);
+  gid('confirm-title').textContent=title;gid('confirm-msg').textContent=msg;
+  const y=gid('confirm-yes');y.textContent=ok;y.classList.toggle('dangerfill',danger);
+  gid('confirm-wrap').classList.add('show');
+  return new Promise(r=>{confirmResolve=r});
+}
+gid('confirm-yes').addEventListener('click',()=>confirmDone(true));
+gid('confirm-no').addEventListener('click',()=>confirmDone(false));
+gid('confirm-wrap').addEventListener('click',e=>{if(e.target.id==='confirm-wrap')confirmDone(false)});
+window.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(gid('confirm-wrap').classList.contains('show')){e.stopImmediatePropagation();confirmDone(false);return}
+  if(gid('picker-wrap').classList.contains('show')){e.stopImmediatePropagation();pickerClose()}
+},true);
+gid('picker-close').innerHTML=icon('close','sm');
+enhanceControls(gid('ai-settings-form'));
 
 /* Mobile Keyboard Smart-Scroll & Focus-Aware Handling
    Layout follows the keyboard: the WebView is resized natively (Capacitor Keyboard resize:"native"),
