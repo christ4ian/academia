@@ -238,40 +238,40 @@ svg{display:block;flex:none}
 .comp-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:10px;margin-top:8px}
 .comp-bottom .tiny{max-width:70%;line-height:1.4}
 
-/* ---------- modal (bottom sheet on mobile) ---------- */
-.modal-wrap{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+/* ---------- modal (bottom sheet on mobile with keyboard-aware layout) ---------- */
+.modal-wrap{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overscroll-behavior:contain}
 .modal-wrap.show{display:flex;animation:fade .2s var(--ease)}
-.dialog{width:100%;max-height:94dvh;overflow-y:auto;background:var(--surface);border-radius:30px 30px 0 0;padding:12px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(22,20,43,.2)}
-.modal-wrap.show .dialog{animation:sheetIn .4s var(--ease)}
-.dialog::before{content:'';display:block;width:38px;height:4px;border-radius:2px;background:#d4d2dd;margin:0 auto 18px}
-.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}
-.dialog-header h2{font-size:30px}
-.type-select{display:flex;gap:6px;overflow-x:auto;margin:0 -20px 18px;padding:2px 20px;scrollbar-width:none}
-.type-select::-webkit-scrollbar{display:none}
-.type-select button{flex:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:8px 15px;font-size:12.5px;font-weight:700;transition:background .2s,color .2s}
+.dialog{width:100%;max-height:88dvh;max-height:88vh;display:flex;flex-direction:column;background:var(--surface);border-radius:28px 28px 0 0;padding:12px 20px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(22,20,43,.2);overflow:hidden;box-sizing:border-box}
+.modal-wrap.show .dialog{animation:sheetIn .35s var(--ease)}
+.dialog::before{content:'';display:block;width:38px;height:4px;border-radius:2px;background:#d4d2dd;margin:0 auto 12px;flex:none}
+.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:12px;flex:none}
+.dialog-header h2{font-size:26px}
+.type-select{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;padding:2px 0;flex:none}
+.type-select button{flex:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;transition:background .2s,color .2s}
 .type-select button.active{background:var(--ink);border-color:var(--ink);color:#fff}
-.field{display:grid;gap:6px;margin-bottom:14px}
+.dialog-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px;overscroll-behavior:contain;scroll-padding-bottom:70px}
+.field{display:grid;gap:5px;margin-bottom:12px}
 .field label{color:var(--ink-2);font-size:12px;font-weight:700}
-.field input,.field textarea,.field select,.subtask-edit input[type=text],.stage-edit input{width:100%;min-width:0;border:1.5px solid var(--line-2);border-radius:14px;padding:12px 14px;background:#fff;color:var(--ink);font-size:16px;transition:border-color .2s,box-shadow .2s}
-.field textarea{resize:vertical;min-height:84px}
+.field input,.field textarea,.field select,.subtask-edit input[type=text],.stage-edit input{width:100%;min-width:0;border:1.5px solid var(--line-2);border-radius:14px;padding:11px 13px;background:#fff;color:var(--ink);font-size:16px;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
+.field textarea{resize:vertical;min-height:76px}
 .field input:focus,.field textarea:focus,.field select:focus,.subtask-edit input[type=text]:focus,.stage-edit input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale);outline:none}
 .field small{color:var(--muted);font-size:11px}
 .fieldrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .fieldrow.three{grid-template-columns:1fr 1fr}
 .switchrow{display:flex;gap:9px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:13px}
-.subtask-list{display:grid;gap:8px;margin:12px 0}
+.subtask-list{display:grid;gap:8px;margin:10px 0}
 .subtask-edit{display:flex;align-items:center;gap:8px}
-.subtask-edit input[type=text]{flex:1;padding:10px 12px}
+.subtask-edit input[type=text]{flex:1;padding:9px 12px}
 .subtask-edit input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
 .subtask-edit button{border:0;background:none;color:var(--muted);padding:6px}
-.stages-list{display:grid;gap:10px;margin:12px 0}
+.stages-list{display:grid;gap:10px;margin:10px 0}
 .stage-edit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:6px}
-.stage-edit input{padding:10px 12px}
+.stage-edit input{padding:9px 12px}
 .stage-edit input:first-child{grid-column:1/3}
 .stage-edit button{grid-column:3;grid-row:1;background:transparent;border:0;color:var(--muted)}
-.add-inline{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1.5px dashed #c8c5e6;border-radius:14px;background:transparent;color:var(--accent);font-size:13px;font-weight:700;transition:background .2s}
+.add-inline{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px dashed #c8c5e6;border-radius:14px;background:transparent;color:var(--accent);font-size:13px;font-weight:700;transition:background .2s}
 .add-inline:hover{background:var(--accent-pale)}
-.modal-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.modal-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px;margin-top:8px;background:var(--surface);flex:none;position:sticky;bottom:0;z-index:5}
 .modal-actions .delete{margin-right:auto}
 
 /* ---------- menu, toast, bottom nav ---------- */
@@ -417,7 +417,7 @@ svg{display:block;flex:none}
 <main class="main"><div class="frame"><header class="header"><div class="header-left"><span class="brandmobile" id="mobile-brand">academia.</span><span class="crumb" id="breadcrumb">Workspace / Overview</span></div><div class="header-actions"><span class="date-indicator" id="today-label"></span><div class="settings-wrap"><button class="iconbtn" aria-label="Pengaturan dan data" id="settings-button"></button><div class="settings-menu" id="settings-menu"><button data-action="ai-settings" class="ai-setting-menu-button">Gemini AI / API Key</button><button data-action="export">Ekspor cadangan JSON</button><button data-action="import">Impor cadangan JSON</button><button data-action="empty">Mulai dengan data kosong</button><button class="danger" data-action="reset">Pulihkan data contoh</button></div></div><button class="primary" id="header-create"></button></div></header><div id="home" class="view active"></div><div id="tasks" class="view"></div><div id="calendar" class="view"></div><div id="competitions" class="view"></div></div></main>
 </div>
 <nav class="mobilebar" id="mobile-nav" aria-label="Navigasi utama"></nav>
-<div class="modal-wrap" id="modal-wrap" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="dialog-header"><h2 id="modal-title">Tambah aktivitas</h2><button id="modal-close" class="iconbtn" aria-label="Tutup"></button></div><div class="type-select" id="modal-types"></div><div class="ai-review hidden" id="ai-review" role="status"></div><form id="entry-form"><div id="modal-fields"></div><div class="modal-actions"><button class="ghost destructive delete hidden" type="button" id="modal-delete">Hapus</button><button class="secondary" type="button" id="modal-cancel">Batal</button><button class="primary" type="submit" id="modal-save">Simpan</button></div></form></section></div>
+<div class="modal-wrap" id="modal-wrap" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="dialog-header"><h2 id="modal-title">Tambah aktivitas</h2><button id="modal-close" class="iconbtn" aria-label="Tutup"></button></div><div class="type-select" id="modal-types"></div><div class="ai-review hidden" id="ai-review" role="status"></div><form id="entry-form" class="dialog-form" style="display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden"><div class="dialog-body"><div id="modal-fields"></div></div><div class="modal-actions"><button class="ghost destructive delete hidden" type="button" id="modal-delete">Hapus</button><button class="secondary" type="button" id="modal-cancel">Batal</button><button class="primary" type="submit" id="modal-save">Simpan</button></div></form></section></div>
 <div class="modal-wrap" id="ai-settings-wrap" role="presentation"><section class="dialog ai-settings-dialog" role="dialog" aria-modal="true" aria-labelledby="ai-settings-title"><div class="dialog-header"><h2 id="ai-settings-title">Gemini AI · Pengaturan</h2><button type="button" class="iconbtn" id="ai-settings-close" aria-label="Tutup pengaturan">✕</button></div>
 <form id="ai-settings-form" autocomplete="off">
 <div class="field"><label for="gemini-api-key">Gemini API Key</label><input id="gemini-api-key" name="apiKey" type="password" placeholder="Tempel API key dari Google AI Studio" autocomplete="off" autocapitalize="off" spellcheck="false"><small>Kunci tidak disertakan dalam ekspor cadangan Academia.</small></div>
@@ -506,9 +506,21 @@ function renderCalendar(){const now=localToday(),start=calendarMode==='agenda'?n
   if(calendarMode==='month'){document.getElementById('calendar').innerHTML=top+`<div class="calendar-layout"><section class="panel cal-panel"><div class="cal-toolbar"><h2>${MONTHS[calCursor.getMonth()]} ${calCursor.getFullYear()}</h2><div class="cal-nav"><button class="iconbtn" data-month-shift="-1" title="Bulan sebelumnya">${icon('left','sm')}</button><button class="iconbtn" data-month-shift="1" title="Bulan berikutnya">${icon('right','sm')}</button></div></div>${calendarHTML()}</section><section class="panel day-panel"><div class="eyebrow">SELECTED DAY</div><div class="selected-day">${fmt(picked,{weekday:'long',day:'numeric',month:'long'})}</div><div class="selected-day-sub">Agenda pada tanggal ini</div>${events.length?events.map(eventRow).join(''):'<div class="empty">Tidak ada agenda di tanggal ini.</div>'}</section></div>`;return}
   const group=new Map();for(const e of events){if(!group.has(e.date))group.set(e.date,[]);group.get(e.date).push(e)}const groups=[...group.entries()].map(([d,rows])=>`<div class="agenda-group"><strong>${fmt(d,{weekday:'long',day:'numeric',month:'long'})}</strong>${rows.map(eventRow).join('')}</div>`).join('');document.getElementById('calendar').innerHTML=top+`<section class="panel panel-pad"><div class="section-head"><h2>${calendarMode==='study'?'Sesi belajar mendatang':'Agenda 60 hari ke depan'}</h2><span class="tiny muted">${events.length} kegiatan</span></div>${groups||'<div class="empty">Belum ada kegiatan dalam rentang ini.</div>'}</section>`}
 function renderCompetitions(){const sorted=[...db.competitions].sort((a,b)=>{const next=c=>[...(c.stages||[])].filter(s=>!s.done&&s.date>=localToday()).sort((x,y)=>x.date.localeCompare(y.date))[0]?.date||'9999-12-31';return next(a).localeCompare(next(b))});const cards=sorted.map(c=>{const stages=[...(c.stages||[])].sort((a,b)=>a.date.localeCompare(b.date));const next=stages.find(s=>!s.done&&s.date>=localToday());const allDone=stages.length&&stages.every(s=>s.done);return `<section class="competition-card"><div class="competition-top"><div><h2>${esc(c.name)}</h2><div class="competition-meta">${esc([c.subject,c.mode,c.location].filter(Boolean).join(' · ')||'Lomba akademik')}</div></div><span class="pill ${allDone?'':'on'}">${allDone?'Selesai':next?'Aktif':'Tanpa jadwal'}</span></div><div class="timeline-scroll"><div class="timeline">${stages.length?stages.map(s=>`<div class="stage ${s.done?'passed':''} ${next?.id===s.id?'next':''}"><button type="button" class="round" data-stage-toggle="${esc(c.id)}" data-stage-id="${esc(s.id)}" aria-label="${s.done?'Batalkan selesai':'Tandai selesai'} tahap ${esc(s.title)}">${s.done?icon('check','sm'):''}</button><strong>${esc(s.title)}</strong><small>${fmt(s.date)}${s.time?' · '+esc(s.time):''}</small></div>`).join(''):'<span class="muted tiny">Belum ada tahapan.</span>'}</div></div><div class="comp-bottom"><span class="tiny muted">${next?`Berikutnya: ${esc(next.title)} · ${fmt(next.date)}`:allDone?'Semua tahap telah selesai':'Tambahkan jadwal tahapan'}</span><button class="text-link" data-open-comp="${esc(c.id)}">Detail & edit ${icon('right','sm')}</button></div></section>`}).join('');document.getElementById('competitions').innerHTML=heading('THE NEXT CHALLENGE','Competitions','Timeline setiap lomba langsung terlihat. Ketuk sebuah tahap untuk menandainya selesai.')+`<div class="competition-list">${cards||'<div class="panel empty">Belum ada lomba. Tekan Tambah, lalu pilih Lomba.</div>'}</div>`}
-function modalOpen(type='task',record=null){aiReviewWarnings=null;modalType=type;editing=record?record.id:null;draftSubtasks=(record?.subtasks||[]).map(s=>({...s}));draftStages=(record?.stages||[]).map(s=>({...s}));modalDraft=null;document.getElementById('modal-wrap').classList.add('show');document.body.style.overflow='hidden';renderModal(record);setTimeout(()=>document.querySelector('#modal-fields [name="title"]')?.focus(),30)}
+function modalOpen(type='task',record=null){
+  aiReviewWarnings=null;modalType=type;editing=record?record.id:null;
+  draftSubtasks=(record?.subtasks||[]).map(s=>({...s}));
+  draftStages=(record?.stages||[]).map(s=>({...s}));
+  modalDraft=null;
+  document.getElementById('modal-wrap').classList.add('show');
+  document.body.style.overflow='hidden';
+  renderModal(record);
+  // Only autofocus if desktop or pointer is fine (mouse). On touch screens, let user view form first without Gboard jarring jump.
+  if(window.matchMedia('(pointer:fine)').matches){
+    setTimeout(()=>document.querySelector('#modal-fields [name="title"]')?.focus(),40);
+  }
+}
 function modalClose(){aiReviewWarnings=null;document.getElementById('modal-wrap').classList.remove('show');document.body.style.overflow='';editing=null;modalDraft=null}
-const formField=(label,name,value='',type='text',props='')=>`<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" ${props}></div>`;
+const formField=(label,name,value='',type='text',props='')=>`<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" enterkeyhint="next" ${props}></div>`;
 const selectField=(label,name,items,value='')=>`<div class="field"><label for="f-${name}">${label}</label><select id="f-${name}" name="${name}">${items.map(([v,n])=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(n)}</option>`).join('')}</select></div>`;
 function subtaskEditors(){return `<div class="subtask-list" id="subtask-editors">${draftSubtasks.map((s,i)=>`<div class="subtask-edit"><input type="checkbox" data-subtask-check="${i}" ${s.done?'checked':''} aria-label="Status subtugas"><input type="text" data-subtask-text="${i}" value="${esc(s.title)}" placeholder="Nama subtugas" maxlength="120"><button type="button" title="Hapus subtugas" data-subtask-remove="${i}">${icon('close','sm')}</button></div>`).join('')}</div><button class="add-inline" type="button" id="add-subtask">${icon('plus','sm')} Tambah subtask (opsional)</button>`}
 function stageEditors(){return `<div class="stages-list" id="stage-editors">${draftStages.map((s,i)=>`<div class="stage-edit"><input type="text" data-stage-title="${i}" value="${esc(s.title)}" placeholder="Nama tahap" aria-label="Nama tahapan ${i+1}" maxlength="80"><input type="date" data-stage-date="${i}" value="${esc(s.date||'')}" aria-label="Tanggal tahapan ${i+1}"><button title="Hapus tahap" type="button" data-stage-remove="${i}">${icon('close','sm')}</button></div>`).join('')}</div><button class="add-inline" id="add-stage" type="button">${icon('plus','sm')} Tambah tahapan</button><div class="tiny muted" style="margin-top:8px">Isi nama dan tanggal setiap tahap. Semua tahap muncul di kalender.</div>`}
@@ -714,6 +726,28 @@ document.getElementById('gemini-test').addEventListener('click',async()=>{
   }catch(err){status.textContent='Uji koneksi gagal: '+err.message}finally{button.disabled=false}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('ai-settings-wrap').classList.contains('show'))closeAISettings()});
+
+/* Mobile Keyboard Smart-Scroll & Focus-Aware Handling */
+document.addEventListener('focusin',e=>{
+  const target=e.target;
+  if(!target||!['INPUT','TEXTAREA','SELECT'].includes(target.tagName))return;
+  const dialogBody=target.closest('.dialog-body');
+  if(dialogBody){
+    setTimeout(()=>{
+      target.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+    },280);
+  }
+});
+
+/* Android hardware back button & modal dismiss support */
+window.addEventListener('popstate',()=>{
+  if(document.getElementById('modal-wrap').classList.contains('show')){
+    modalClose();
+  }
+  if(document.getElementById('ai-settings-wrap').classList.contains('show')){
+    closeAISettings();
+  }
+});
 
 if(location.hash&&navs.some(n=>'#'+n[0]===location.hash))view=location.hash.slice(1);
 window.addEventListener('hashchange',()=>{const next=location.hash.slice(1);if(navs.some(n=>n[0]===next)&&next!==view){view=next;render()}});
