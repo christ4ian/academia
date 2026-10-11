@@ -268,11 +268,11 @@ svg{display:block;flex:none}
 .subtask-edit input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
 .subtask-edit button{border:0;background:none;color:var(--muted);padding:6px}
 .stages-list{display:grid;gap:10px;margin:10px 0}
-.stage-edit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:6px}
-.stage-edit input{padding:9px 12px}
-.stage-edit input:first-child{grid-column:1/3}
-.stage-edit .pick-btn{grid-column:1/3;padding:9px 12px;min-height:0}
-.stage-edit button:not(.pick-btn){grid-column:3;grid-row:1;background:transparent;border:0;color:var(--muted)}
+.stage-edit{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 32px;gap:8px;align-items:center}
+.stage-edit input{padding:9px 12px;height:42px}
+.stage-edit input:first-child{grid-column:auto}
+.stage-edit .pick-btn{grid-column:auto;padding:8px 12px;min-height:42px;height:42px;font-size:13.5px}
+.stage-edit button:not(.pick-btn){grid-column:auto;grid-row:auto;background:transparent;border:0;color:var(--muted);width:32px;height:32px;display:grid;place-items:center}
 .add-inline{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px dashed #c8c5e6;border-radius:14px;background:transparent;color:var(--accent);font-size:13px;font-weight:700;transition:background .2s}
 .add-inline:hover{background:var(--accent-pale)}
 .modal-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px;margin-top:8px;background:var(--surface);flex:none;position:sticky;bottom:0;z-index:5}
