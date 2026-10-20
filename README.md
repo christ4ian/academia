@@ -1,73 +1,43 @@
-# Academia
+# Academia v2.0
 
-A standalone, mobile-friendly academic planner for tasks, exams, study schedules, and competitions.
+A mobile-friendly academic planner for tasks, personal study agendas, daily schedules (00:00–24:00), notes, and competitions — powered by Firebase Authentication & Firestore cloud sync, plus Google Gemini & OpenRouter AI Quick Add.
 
-## Try it (Web / PWA)
-Open `index.html` in your browser. For installable PWA/offline shell, serve the directory over HTTPS or localhost. The app works offline once loaded, with `localStorage` persistence.
-
-For local development:
+## Local Development (Web / PWA)
+Build the bundle and serve locally:
 ```bash
+npm install
+npm run build
+npm test
 python -m http.server 8080
 ```
 Open `http://localhost:8080/index.html`.
 
 ---
 
-## Android Build via GitHub Actions (Capacitor 8)
-
-You do **not** need Android Studio or the Android SDK installed on your computer. A GitHub Actions workflow builds a debug APK automatically in the cloud.
-
-### 1. Push Project to GitHub
-
-If you haven't already connected this project to GitHub:
-```bash
-git init
-git add .
-git commit -m "Convert Academia to Capacitor 8 with GitHub Actions"
-git branch -M main
-git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPOSITORY>.git
-git push -u origin main
-```
-
-> **Security Note:** Never commit sensitive API keys or credentials. Keys entered in the AI settings modal stay securely in your device's local browser/app storage (`localStorage`) and are never tracked in Git.
-
-### 2. Trigger the Build
-
-You have two ways to trigger the build:
-
-1. **Automatic Build:** Every push to `main` or `master` triggers the build automatically.
-2. **Manual Dispatch Trigger:**
-   1. Go to your repository on GitHub.
-   2. Click the **Actions** tab.
-   3. In the left sidebar, click **Build Android Debug APK**.
-   4. Click the **Run workflow** dropdown button on the right.
-   5. Select the branch (e.g. `main`) and click **Run workflow**.
-
-### 3. Download the APK Artifact
-
-1. Once the workflow run finishes with a green checkmark (usually ~3–5 minutes), click on the run title.
-2. Scroll down to the **Artifacts** section at the bottom of the summary page.
-3. Click **`academia-debug-apk`** to download the ZIP file containing `app-debug.apk`.
-4. Extract the ZIP file to get `app-debug.apk`.
-
-### 4. Install the APK on Your Android Phone
-
-1. **Transfer the APK to your phone:**
-   - Transfer via USB cable, Google Drive, WhatsApp, or download it directly from GitHub in your phone's browser (desktop site mode).
-2. **Open the APK:**
-   - Tap `app-debug.apk` in your phone's Files / Downloads app.
-3. **Allow Installation from Unknown Sources:**
-   - If prompted by Android (*"For your security, your phone is not allowed to install unknown apps from this source"*), tap **Settings**.
-   - Toggle **Allow from this source** ON.
-4. **Complete Installation:**
-   - Tap **Install**. Once installed, tap **Open** to launch Academia as a native Android app!
+## Key Features in v2.0
+- **Visible Notes Everywhere**: Dedicated **Notes** tab (pin to Home, color-coded cards, subject filters), inline 2-line note previews on every task, agenda, and competition card, plus optional note attachment on tasks/events.
+- **OpenRouter + Gemini AI Quick Add**: Choose between Google Gemini and OpenRouter (13 curated `:free` models built-in, default `nvidia/nemotron-3-ultra-550b-a55b:free`, live refresh from OpenRouter API, and custom model ID input).
+- **Personal Agenda (`Agenda Pribadi`)**: Dedicated segment in Tasks for self-paced study goals (e.g., summarizing chapters) without mandatory deadlines, complete with checklists.
+- **Customizable Calendar Types & GCal-Style Month View**: Built-in types (`Libur`, `Ulangan`, `Tugas`, `Belajar`, `Agenda pribadi`, `Acara sekolah`, `Ekskul`, `Pengingat`, `Lomba`) with customizable labels, 8-color palette, visibility toggles, custom user-defined types, holiday cell highlights, and compact GCal-style chips.
+- **24-Hour Daily View (`00:00–24:00`) & "Rencana Hari"**: Interactive 00:00–24:00 hourly grid with live red current-time line, tap-to-schedule slots, and a batch **"Atur hari ini"** planner (quick rows, multiline text parser, one-tap import from active tasks, and overlap detection).
+- **Integrated Competitions**: Competitions appear directly on the Calendar and in the conditional **Lomba Aktif** card on Home with accurate upcoming stage countdowns (`H-N`) and missed-stage indicators.
+- **Firebase Auth & Real-Time Firestore Sync**: Sign in with Google (Web popup & native Capacitor Android) or Email/Password, with offline persistence and per-item last-write-wins sync under `users/{uid}/{tasks|activities|notes|competitions}/{id}`.
 
 ---
 
-## Features
-- **Home**: Quick Add bar, high-priority tasks, and upcoming agenda.
-- **Tasks**: Checklists, subtasks, subjects, deadlines, edit/delete/search.
-- **Calendar**: Month, agenda, and study blocks with type filters.
-- **Competitions**: Multi-stage progress tracking with timeline display.
-- **Study Planning**: Time intervals, recurrence, and session blocks.
-- **Local Persistence**: `localStorage` backup & restore via JSON.
+## Firebase & Android Build Setup (Capacitor 8 + GitHub Actions)
+
+1. **Firebase Console**:
+   - Enable **Google** and **Email/Password** in **Authentication → Sign-in method**.
+   - Create a **Firestore Database** and deploy the security rules in [`firestore.rules`](firestore.rules).
+   - Register Android app `com.academia.app`, add your keystore's SHA-1 fingerprint, and download `google-services.json`.
+
+2. **GitHub Actions Secrets** (`Settings → Secrets and variables → Actions`):
+   - `KEYSTORE_B64`: Base64-encoded fixed `.jks` keystore file
+   - `KEYSTORE_PASSWORD`: Keystore password
+   - `KEY_ALIAS`: Key alias (`academia`)
+   - `KEY_PASSWORD`: Key password
+   - `GOOGLE_SERVICES_JSON_B64`: Base64-encoded `google-services.json`
+
+3. **Trigger APK Build**:
+   - Push to `main` or run the **Build Academia APK** workflow manually from the **Actions** tab, then download **`Academia-Android-APK`**.

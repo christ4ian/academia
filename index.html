@@ -2,1011 +2,158 @@
 <html lang="id">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="theme-color" content="#fbfaf8"><meta name="description" content="Academia, planner akademik ringan untuk tugas, kalender, jadwal belajar, dan lomba.">
+<meta name="theme-color" content="#fbfaf8"><meta name="description" content="Academia, planner akademik untuk tugas, agenda pribadi, kalender harian, catatan, dan lomba.">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
 <title>Academia · Your academic space</title>
-<style>
-/* ==========================================================
-   Academia — Editorial soft-depth design system (mobile-first)
-   Fonts: Instrument Serif (display) + Plus Jakarta Sans (UI)
-   ========================================================== */
-:root{
-  --bg:#fbfaf8;--bg-2:#f3f0ea;--surface:#ffffff;--ink:#1c1a17;--ink-2:#3d3935;--muted:#736e65;--subtle:#b0aaa0;
-  --line:rgba(28,26,23,.08);--line-2:rgba(28,26,23,.13);
-  --accent:#244b3b;--accent-2:#356350;--accent-pale:#eaf2ed;--on-pale:#16382b;--terra:#c86745;--terra-pale:#faece6;
-  --blue:#3b648c;--green:#2e7d5a;--amber:#c2781b;--purple:#6b528a;--red:#c03c4f;--rose:#a8566d;
-  --r:20px;--r-lg:26px;
-  --sh-1:0 1px 3px rgba(28,26,23,.04),0 2px 6px rgba(28,26,23,.03);
-  --sh-2:0 2px 4px rgba(28,26,23,.03),0 8px 24px -6px rgba(28,26,23,.06);
-  --sh-3:0 12px 36px -10px rgba(36,75,59,.18);
-  --grad:linear-gradient(180deg,#2d5b48,#204536);
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;height:100%;background:#FCFBFA;overflow-x:hidden;max-width:100%}
-body{margin:0;width:100%;max-width:100%;overflow-wrap:break-word;min-height:100%;min-height:100dvh;color:var(--ink);font:14px/1.55 var(--sans);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;background:var(--bg);overscroll-behavior-y:none}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.42;cursor:not-allowed}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-h1,h2,h3,p{margin:0}
-h1{font-family:var(--serif);font-weight:400;font-size:38px;line-height:1.05;letter-spacing:-.4px}
-h2{font-family:var(--serif);font-weight:400;font-size:23px;line-height:1.15;letter-spacing:-.2px}
-h1 em,h2 em{font-style:italic;color:var(--accent)}
-h3{font-size:14px;font-weight:700}
-a{color:inherit}
-.hidden{display:none!important}
-svg{display:block;flex:none}
-.icon{width:20px;height:20px;stroke-width:1.8}.icon.sm{width:16px;height:16px}.icon.lg{width:23px;height:23px}.icon.xl{width:26px;height:26px}
-::selection{background:var(--accent-pale);color:var(--on-pale)}
-
-/* ---------- shell ---------- */
-.app{min-height:100%;min-height:100dvh;max-width:100%}
-.sidebar{display:none}
-.main{min-width:0;max-width:100%;padding:0 16px calc(150px + env(safe-area-inset-bottom))}
-.frame{max-width:1080px;margin:auto;min-width:0}
-.view{min-width:0}
-.header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 -16px 8px;padding:calc(12px + env(safe-area-inset-top)) 16px 10px;background:rgba(251,250,248,.96);border-bottom:1px solid var(--line)}
-.header-left{display:flex;align-items:center;gap:10px}
-.brandmobile,.brand-title{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1;letter-spacing:-.4px;color:var(--ink)}
-.brandmobile b,.brand-title b{font-weight:400;color:var(--accent)}
-.crumb,.date-indicator{display:none}
-.header-actions{display:flex;align-items:center;gap:8px}
-
-/* ---------- buttons ---------- */
-.primary,.secondary,.ghost,.iconbtn,.smallbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 18px;border-radius:999px;border:1px solid transparent;font-weight:700;font-size:13.5px;transition:background .2s var(--ease),box-shadow .2s var(--ease),transform .15s var(--ease),color .2s}
-.primary{color:#fff;background:var(--accent);box-shadow:0 3px 10px -2px rgba(36,75,59,.35)}
-.primary:hover{background:var(--accent-2)}
-.secondary{background:var(--surface);border-color:var(--line-2);color:var(--ink-2)}
-.secondary:hover{background:var(--bg-2)}
-.ghost{background:transparent;color:var(--muted)}
-.ghost:hover{background:var(--bg-2)}
-.smallbtn{background:transparent;padding:6px 10px;min-height:32px;color:var(--muted)}
-.iconbtn{width:40px;height:40px;min-height:0;padding:0;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);box-shadow:var(--sh-1)}
-.iconbtn:hover{color:var(--accent);border-color:var(--accent)}
-.primary:active,.secondary:active,.ghost:active,.iconbtn:active{transform:scale(.96)}
-.destructive{color:var(--red)}
-.dangerfill{color:#fff;background:var(--red)}
-#header-create{position:fixed;right:16px;bottom:calc(88px + env(safe-area-inset-bottom));z-index:25;height:52px;padding:0 20px 0 16px;border-radius:18px;font-size:14px;box-shadow:0 10px 24px -4px rgba(36,75,59,.45)}
-#header-create .icon{width:18px;height:18px;stroke-width:2.2}
-
-/* ---------- typography helpers ---------- */
-.view{display:none}
-.view.active{display:block;animation:viewIn .35s var(--ease)}
-.page-intro{padding:14px 2px 20px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;font-size:10.5px;font-weight:800;letter-spacing:1.5px;color:var(--accent);margin-bottom:10px}
-.eyebrow::before{content:'';width:16px;height:1.5px;border-radius:2px;background:currentColor}
-.page-intro p{margin-top:10px;color:var(--muted);font-size:13.5px;max-width:52ch}
-.split-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px}
-.muted{color:var(--muted)}
-.tiny{font-size:11.5px}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
-.section-head h2{display:flex;align-items:center;gap:10px;font-size:22px}
-.sh-ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--accent-pale);color:var(--accent)}
-.sh-ic.green{background:#e7f3ec;color:var(--green)}
-.sh-ic.purple{background:#f0eaf7;color:var(--purple)}
-.count{font-family:var(--sans);font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;background:var(--bg-2);color:var(--muted);letter-spacing:0}
-.text-link{border:0;background:none;color:var(--accent);font-size:12.5px;font-weight:700;display:inline-flex;gap:3px;align-items:center;padding:6px 2px;border-radius:8px;white-space:nowrap}
-.text-link:hover{text-decoration:underline;text-underline-offset:3px}
-
-/* ---------- HERO (Warm, Calm, Clean) ---------- */
-.hero{position:relative;margin:10px 0 16px;padding:22px 20px 18px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-2)}
-.hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-.hero-date{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted)}
-.hero-chip{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--accent-pale);color:var(--on-pale);white-space:nowrap}
-.hero-chip i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.hero-chip.warn{background:var(--terra-pale);color:var(--terra)}
-.hero-chip.warn i{background:var(--terra)}
-.hero-title{font-size:38px;line-height:1.05;letter-spacing:-.4px;color:var(--ink)}
-.hero-title em{color:var(--accent);font-style:italic}
-.hero-sub{margin-top:10px;font-size:13.5px;line-height:1.55;color:var(--muted);max-width:48ch}
-.hero-quick{display:flex;align-items:center;gap:8px;margin-top:18px;padding:5px 5px 5px 14px;border-radius:16px;background:var(--bg);border:1.5px solid var(--line-2);transition:border-color .2s,box-shadow .2s,background .2s}
-.hero-quick:focus-within{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px var(--accent-pale)}
-.hero-quick>.icon{color:var(--accent)}
-.hero-quick input{flex:1;min-width:0;border:0;background:transparent;padding:10px 2px;font-size:16px;color:var(--ink);outline:none}
-.hero-quick input::placeholder{color:var(--subtle)}
-.hero-quick button{flex:none;width:40px;height:40px;border:0;border-radius:12px;display:grid;place-items:center;background:var(--accent);color:#fff;transition:background .2s,transform .15s}
-.hero-quick button:hover{background:var(--accent-2)}
-.hero-quick button:active{transform:scale(.94)}
-
-/* ---------- panels & task list with subtasks ---------- */
-.home-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
-.home-left,.home-right{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:14px;min-width:0}
-.home-layout>*,.home-left>*,.home-right>*,.calendar-layout>*,.competition-list>*{min-width:0}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1)}
-.panel-pad{padding:18px}
-.metric-line{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
-.task-line{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-top:1px solid var(--line);min-width:0}
-.section-head+.task-line,.task-table .task-line:first-child{border-top:0}
-.tick{width:24px;height:24px;margin-top:1px;flex:none;padding:0;border-radius:50%;border:2px solid var(--subtle);background:#fff;color:#fff;display:grid;place-items:center;transition:background .2s var(--ease),border-color .2s,transform .15s}
-.tick:hover{border-color:var(--accent);background:var(--accent-pale)}
-.tick:active{transform:scale(.88)}
-.tick .icon{width:13px;height:13px;stroke-width:3}
-.tick.done{background:var(--accent);border-color:var(--accent);animation:pop .3s var(--ease)}
-.item-text{min-width:0;flex:1}
-.item-text strong{display:block;white-space:normal;overflow-wrap:anywhere;word-break:break-word;font-size:14px;font-weight:700;color:var(--ink)}
-.item-text strong.finished{text-decoration:line-through;color:var(--subtle)}
-.row-sub{color:var(--muted);font-size:12px;margin-top:3px;overflow-wrap:anywhere}
-.tail{font-size:11px;font-weight:800;color:var(--accent);background:var(--accent-pale);padding:3px 8px;border-radius:999px;white-space:nowrap;margin-top:2px}
-.row-open{flex:none;border:0;background:transparent;width:34px;height:34px;margin-top:-2px;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--subtle);transition:background .2s,color .2s}
-.row-open:hover{background:var(--bg-2);color:var(--ink)}
-
-/* Subtask checklist expansion inside task cards */
-.subtask-checklist{display:grid;gap:6px;margin:8px 0 2px;padding:8px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
-.subtask-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);padding:2px 0}
-.sub-tick{width:18px;height:18px;flex:none;padding:0;border-radius:5px;border:1.5px solid var(--subtle);background:#fff;color:#fff;display:grid;place-items:center;transition:all .15s}
-.sub-tick:hover{border-color:var(--accent)}
-.sub-tick.done{background:var(--accent);border-color:var(--accent)}
-.sub-tick .icon{width:11px;height:11px;stroke-width:3}
-.sub-title{min-width:0;flex:1;white-space:normal;overflow-wrap:anywhere}
-.sub-title.done{text-decoration:line-through;color:var(--subtle)}
-
-.agenda-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.agenda-row:last-child{border-bottom:0}
-.agenda-row.clickable{cursor:pointer;transition:opacity .2s}
-.agenda-row.clickable:hover strong{color:var(--accent)}
-.daybox{display:grid;place-items:center;align-content:center;flex:none;min-width:48px;height:50px;border-radius:13px;background:var(--bg-2);border:1px solid var(--line)}
-.daybox small{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);line-height:1.2}
-.daybox strong{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1;color:var(--ink)}
-.daybox.trophy{background:var(--accent-pale);color:var(--accent);border-color:transparent}
-.agenda-info{min-width:0;flex:1}
-.agenda-info strong{display:block;font-size:13.5px;font-weight:700;white-space:normal;overflow-wrap:anywhere;word-break:break-word;transition:color .2s}
-.agenda-info .row-sub{display:block}
-.type-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:1px;background:var(--blue)}
-.type-dot.task{background:var(--blue)}.type-dot.exam{background:var(--amber)}.type-dot.study{background:var(--green)}.type-dot.competition{background:var(--purple)}.type-dot.event{background:var(--rose)}
-.divider{height:1px;background:var(--line);margin:16px 0}
-.empty{padding:26px 12px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
-.empty .icon{margin:0 auto 10px;color:var(--subtle)}
-
-/* ---------- tasks ---------- */
-.toolrow{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
-.tabs{display:flex;gap:4px;padding:4px;background:var(--bg-2);border-radius:999px;width:fit-content}
-.tab{border:0;background:transparent;padding:9px 18px;border-radius:999px;color:var(--muted);font-weight:700;font-size:13px;transition:background .2s,color .2s,box-shadow .2s}
-.tab.active{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1)}
-.search{width:100%;height:48px;padding:10px 16px 10px 44px;border-radius:16px;border:1px solid var(--line-2);font-size:16px;color:var(--ink);outline:none;box-shadow:var(--sh-1);transition:border-color .2s,box-shadow .2s;
-  background:var(--surface) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f5e73' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>") no-repeat 15px center/18px}
-.search:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale)}
-.task-table{overflow:hidden}
-.task-table .task-line{padding:15px 16px}
-.progress-track{height:5px;width:95px;background:var(--bg-2);border-radius:999px;overflow:hidden}
-.progress-fill{height:100%;background:var(--accent)}
-
-/* ---------- calendar ---------- */
-.cal-main-head{display:flex;margin:0 0 12px}
-.calendar-modes{display:flex;gap:4px;padding:4px;background:var(--bg-2);border-radius:999px;width:fit-content;max-width:100%;overflow-x:auto}
-.calendar-modes button{border:0;background:transparent;padding:8px 14px;border-radius:999px;color:var(--muted);font-weight:700;font-size:12.5px;white-space:nowrap;transition:background .2s,color .2s}
-.calendar-modes button.active{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1)}
-.filterrow{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 16px;padding:2px 16px;scrollbar-width:none}
-.filterrow::-webkit-scrollbar{display:none}
-.filterchip{flex:none;display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);font-size:12px;font-weight:700;color:var(--ink-2);transition:background .2s,color .2s}
-.filterchip.off{background:transparent;color:var(--subtle);border-style:dashed}
-.filterchip.off .type-dot{opacity:.35}
-.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
-.cal-panel{padding:16px 10px 12px}
-.cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 6px 14px}
-.cal-toolbar h2{font-size:28px}
-.cal-nav{display:flex;gap:6px}
-.cal-nav .iconbtn{width:38px;height:38px;box-shadow:none}
-.cal-week,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
-.cal-week{text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--subtle);padding-bottom:8px}
-.cal-cell{min-height:52px;padding:5px 2px;border:0;border-radius:14px;background:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink);transition:background .15s}
-.cal-cell:hover{background:var(--bg)}
-.cal-cell.outside{opacity:.3}
-.cal-cell.selected{background:var(--accent-pale)}
-.daynum{font-weight:700;font-size:13px;width:28px;height:28px;display:grid;place-items:center;border-radius:50%}
-.cal-cell.selected .daynum{color:var(--on-pale)}
-.cal-cell.today .daynum{background:var(--ink);color:#fff}
-.cal-cell.today.selected .daynum{background:var(--accent)}
-.cal-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
-.cal-dots i{width:5px;height:5px;border-radius:50%;background:var(--blue)}
-.cal-dots i.exam{background:var(--amber)}.cal-dots i.study{background:var(--green)}.cal-dots i.competition{background:var(--purple)}.cal-dots i.event{background:var(--rose)}
-.day-panel{padding:20px}
-.selected-day{font-family:var(--serif);font-size:30px;line-height:1.05}
-.selected-day-sub{font-size:12.5px;color:var(--muted);margin:4px 0 10px}
-.agenda-all{max-height:540px;overflow-y:auto}
-.agenda-group{margin:0 0 14px}
-.agenda-group>strong{display:block;margin:8px 0 2px;font-size:10.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent)}
-.weekday-note{color:var(--subtle);font-size:10px}
-
-/* ---------- competitions ---------- */
-.competition-list{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
-.competition-card{position:relative;overflow:hidden;padding:22px 18px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-2)}
-.competition-card::before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--accent),var(--purple),#ff8fbd)}
-.competition-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.competition-top>div:first-child{min-width:0;flex:1}
-.competition-top h2{font-size:28px;overflow-wrap:anywhere}
-.competition-meta{font-size:12px;color:var(--muted);margin-top:4px}
-.pill{padding:5px 11px;font-size:11px;font-weight:800;border-radius:999px;background:var(--bg-2);color:var(--muted);white-space:nowrap}
-.pill.on{background:#dcf5ec;color:#0f7a5e}
-.pill.soon{background:#fff1e0;color:#a35f0e}
-.timeline-scroll{overflow-x:auto;margin:0 -18px;padding:22px 18px 8px;scrollbar-width:none}
-.timeline-scroll::-webkit-scrollbar{display:none}
-.timeline{display:flex;align-items:flex-start;min-width:max-content}
-.stage{position:relative;width:120px;flex:none;padding-right:12px}
-.stage:not(:last-child)::after{content:'';position:absolute;top:12px;left:34px;right:8px;height:2px;border-radius:2px;background:var(--line-2)}
-.stage.passed:not(:last-child)::after{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
-.stage .round{position:relative;z-index:1;width:26px;height:26px;padding:0;margin:0;border:2px solid #cfcdda;border-radius:50%;background:#fff;color:#fff;display:grid;place-items:center;line-height:0;transition:background .2s var(--ease),border-color .2s,box-shadow .2s,transform .15s}
-.stage .round .icon{width:14px;height:14px;stroke-width:3}
-.stage .round:hover{border-color:var(--accent)}
-.stage .round:active{transform:scale(.88)}
-.stage.passed .round{background:var(--grad);border-color:transparent;animation:pop .35s var(--ease)}
-.stage.next .round{border-color:var(--accent);box-shadow:0 0 0 5px var(--accent-pale)}
-.stage.next .round::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.stage strong{display:block;margin-top:12px;font-size:13px;font-weight:700;overflow-wrap:anywhere;padding-right:4px}
-.stage small{display:block;margin-top:2px;color:var(--muted);font-size:11.5px}
-.comp-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:10px;margin-top:8px}
-.comp-bottom .tiny{max-width:70%;line-height:1.4}
-
-/* ---------- modal (top-aligned full sheet on mobile for optimal keyboard UX) ---------- */
-.modal-wrap{position:fixed;inset:0;z-index:40;display:none;align-items:flex-start;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overscroll-behavior:contain}
-.modal-wrap.show{display:flex;animation:fade .2s var(--ease)}
-.dialog{width:100%;height:100%;height:100dvh;max-height:100dvh;display:flex;flex-direction:column;background:var(--surface);border-radius:0;padding:calc(14px + env(safe-area-inset-top)) 20px calc(14px + env(safe-area-inset-bottom));overflow:hidden;box-sizing:border-box}
-.modal-wrap.show .dialog{animation:viewIn .22s var(--ease)}
-.dialog::before{display:none}
-.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:12px;flex:none}
-.dialog-header h2{font-size:24px}
-.type-select{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;padding:2px 0;flex:none}
-.type-select button{flex:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;transition:background .2s,color .2s}
-.type-select button.active{background:var(--ink);border-color:var(--ink);color:#fff}
-.dialog-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px;overscroll-behavior:contain;scroll-padding-bottom:70px}
-.field{display:grid;gap:5px;margin-bottom:12px;align-content:start}
-.field label{color:var(--ink-2);font-size:12px;font-weight:700}
-.field input:not([type=checkbox]),.field select,.pick-btn{width:100%;min-width:0;height:46px;min-height:46px;border:1.5px solid var(--line-2);border-radius:14px;padding:0 13px;background:#fff;color:var(--ink);font-size:15px;font-weight:500;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
-.field input:focus,.field textarea:focus,.field select:focus,.subtask-edit input[type=text]:focus,.stage-edit input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale);outline:none}
-.field textarea{width:100%;min-width:0;border:1.5px solid var(--line-2);border-radius:14px;padding:11px 13px;background:#fff;color:var(--ink);font-size:15px;resize:vertical;min-height:76px;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
-.field small{color:var(--muted);font-size:11px}
-.fieldrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
-.fieldrow.three{grid-template-columns:1fr 1fr}
-.switchrow{display:flex;gap:9px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:13px}
-.subtask-list{display:grid;gap:8px;margin:10px 0}
-.subtask-edit{display:flex;align-items:center;gap:10px;padding:6px 10px 6px 12px;background:var(--bg);border:1.5px solid var(--line-2);border-radius:14px;transition:border-color .2s,box-shadow .2s,background .2s}
-.subtask-edit:focus-within{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px var(--accent-pale)}
-.subtask-edit input[type=checkbox]{width:20px;height:20px;margin:0;accent-color:var(--accent);cursor:pointer;flex:none}
-.subtask-edit input[type=text]{flex:1;min-width:0;height:38px;padding:0 4px;border:none!important;background:transparent!important;box-shadow:none!important;outline:none!important;font-size:14.5px;font-weight:500;color:var(--ink)}
-.subtask-edit button{flex:none;border:0;background:transparent;color:var(--subtle);width:32px;height:32px;border-radius:999px;display:grid;place-items:center;transition:background .2s,color .2s}
-.subtask-edit button:hover{background:var(--bg-2);color:var(--red)}
-.stages-list{display:grid;gap:10px;margin:10px 0}
-.stage-edit{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.1fr) 36px;gap:8px;align-items:center;padding:7px 8px 7px 12px;background:var(--bg);border:1.5px solid var(--line-2);border-radius:16px;transition:border-color .2s,background .2s}
-.stage-edit:focus-within{border-color:rgba(36,75,59,.35);background:#fff}
-.stage-edit input[type=text]{width:100%;min-width:0;height:40px;min-height:40px;padding:0 12px;border:1.5px solid var(--line-2);border-radius:12px;background:#fff;font-size:13.5px;font-weight:500;box-sizing:border-box}
-.stage-edit input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-pale);outline:none}
-.stage-edit .pick-btn{grid-column:auto;padding:0 12px;min-height:40px;height:40px;border-radius:12px;font-size:13.5px;background:#fff}
-.stage-edit button:not(.pick-btn){grid-column:auto;grid-row:auto;background:transparent;border:0;color:var(--subtle);width:34px;height:34px;border-radius:999px;display:grid;place-items:center;transition:background .2s,color .2s}
-.stage-edit button:not(.pick-btn):hover{background:var(--bg-2);color:var(--red)}
-.add-inline{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1.5px dashed rgba(36,75,59,.25);border-radius:14px;background:transparent;color:var(--accent);font-size:13px;font-weight:700;transition:all .2s var(--ease)}
-.add-inline:hover{background:var(--accent-pale);border-color:var(--accent)}
-.modal-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:1px solid var(--line);padding-top:12px;margin-top:8px;background:var(--surface);flex:none;position:sticky;bottom:0;z-index:5}
-.modal-actions .delete{margin-right:auto}
-
-/* ---------- menu, toast, bottom nav ---------- */
-.settings-wrap{position:relative}
-.settings-menu{display:none;position:absolute;right:0;top:50px;z-index:30;min-width:232px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 22px 50px -12px rgba(22,20,43,.28)}
-.settings-menu.show{display:grid;animation:menuIn .18s var(--ease)}
-.settings-menu button{border:0;text-align:left;background:transparent;padding:12px 14px;font-size:13px;border-radius:12px;color:var(--ink)}
-.settings-menu button:hover{background:var(--bg)}
-.settings-menu button.danger{color:var(--red)}
-.toast{position:fixed;left:50%;bottom:calc(170px + env(safe-area-inset-bottom));transform:translate(-50%,16px);z-index:60;width:max-content;max-width:calc(100vw - 32px);padding:13px 18px;border-radius:14px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s var(--ease);box-shadow:0 14px 34px -8px rgba(22,20,43,.5)}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.mobilebar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:24;display:flex;justify-content:space-around;padding:8px 6px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);border-radius:26px;box-shadow:0 16px 40px -12px rgba(22,20,43,.3);transition:transform .2s var(--ease),opacity .2s}
-.mobilebar a{flex:1;min-width:0;display:grid;justify-items:center;gap:3px;padding:2px 0;text-decoration:none;color:var(--muted);font-size:11px;font-weight:700;transition:color .2s}
-.mobilebar .icon{width:56px;height:32px;padding:5px 17px;border-radius:999px;transition:background .25s var(--ease),color .2s}
-.mobilebar a.active{color:var(--ink)}
-.mobilebar a.active .icon{background:var(--ink);color:#fff}
-.mobilebar a:active .icon{transform:scale(.92)}
-
-/* Sembunyikan floating bar & FAB ketika keyboard aktif mengetik */
-@media(max-width:980px){
-  body:has(input:focus, textarea:focus) .mobilebar{
-    transform:translateY(120%);
-    pointer-events:none;
-    opacity:0;
-  }
-  body:has(input:focus, textarea:focus) #header-create{
-    transform:translateY(120%);
-    pointer-events:none;
-    opacity:0;
-  }
-}
-
-/* ---------- custom controls (replaces native select / date / time / checkbox / confirm) ---------- */
-.pick-native{display:none!important}
-.pick-btn{width:100%;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;height:46px;min-height:46px;padding:0 13px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;color:var(--ink);font-size:15px;font-weight:500;text-align:left;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s;cursor:pointer}
-.pick-btn .pick-val{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-.pick-btn .pick-val.is-empty,.pick-btn .pick-val.empty{color:var(--subtle);padding:0!important;font-size:inherit!important;line-height:inherit!important;text-align:left!important}
-.pick-btn .icon{color:var(--muted);transition:transform .2s var(--ease),color .2s}
-.pick-btn:hover{border-color:var(--accent)}
-.pick-btn.open{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-pale)}
-.pick-btn.open .icon{color:var(--accent)}
-.picker-wrap,.confirm-wrap{position:fixed;inset:0;display:none;justify-content:center;background:rgba(22,20,43,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overscroll-behavior:contain}
-.picker-wrap{z-index:55;align-items:flex-end}
-.confirm-wrap{z-index:58;align-items:center;padding:24px}
-.picker-wrap.show,.confirm-wrap.show{display:flex;animation:fade .2s var(--ease)}
-.picker{width:100%;max-width:440px;max-height:82dvh;max-height:82vh;display:flex;flex-direction:column;background:var(--surface);border-radius:28px 28px 0 0;padding:12px 18px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(22,20,43,.2);box-sizing:border-box;overflow:hidden}
-.picker-wrap.show .picker{animation:sheetIn .3s var(--ease)}
-.picker::before{content:'';display:block;width:38px;height:4px;border-radius:2px;background:#d4d2dd;margin:0 auto 10px;flex:none}
-.picker-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;flex:none}
-.picker-head h3{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:-.2px;min-width:0;overflow-wrap:anywhere}
-.picker-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-.picker-foot{display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);flex:none}
-.picker-foot:empty{display:none}
-.pk-list{display:grid;gap:4px}
-.pk-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:14px 14px;border:0;border-radius:14px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;text-align:left;transition:background .15s}
-.pk-opt span{min-width:0;overflow-wrap:anywhere}
-.pk-opt:hover{background:var(--bg)}
-.pk-opt.sel{background:var(--accent-pale);color:var(--on-pale)}
-.pk-opt .icon{color:var(--accent)}
-.dp-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 2px 10px}
-.dp-month{font-family:var(--serif);font-weight:400;font-size:24px}
-.dp-week,.dp-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
-.dp-week{text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--subtle);padding-bottom:6px}
-.dp-cell{height:42px;border:0;border-radius:50%;background:transparent;color:var(--ink);font-size:14px;font-weight:700;display:grid;place-items:center;transition:background .15s,color .15s,transform .12s}
-.dp-cell:hover{background:var(--bg-2)}
-.dp-cell:active{transform:scale(.92)}
-.dp-cell.out{opacity:.32}
-.dp-cell.today{box-shadow:inset 0 0 0 1.8px var(--accent)}
-.dp-cell.sel{background:var(--accent);color:#fff;box-shadow:none;opacity:1}
-.tp-cols{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
-.tp-sep{font-family:var(--serif);font-size:32px;color:var(--muted)}
-.tp-col{position:relative;height:236px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:grid;gap:3px;align-content:start;padding:4px;border-radius:18px;background:var(--bg);scrollbar-width:none}
-.tp-col::-webkit-scrollbar{display:none}
-.tp-item{height:44px;flex:none;border:0;border-radius:12px;background:transparent;color:var(--ink-2);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;transition:background .15s,color .15s}
-.tp-item:hover{background:var(--bg-2)}
-.tp-item.sel{background:var(--accent);color:#fff}
-.confirm{width:min(380px,100%);background:var(--surface);border-radius:26px;padding:24px 22px 18px;box-shadow:0 24px 60px -12px rgba(22,20,43,.35);animation:rise .25s var(--ease)}
-.confirm h2{font-size:26px;margin-bottom:8px}
-.confirm p{color:var(--muted);font-size:14px;line-height:1.55;overflow-wrap:anywhere}
-.confirm-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
-.confirm-actions button{flex:1}
-.primary.dangerfill{background:var(--red);box-shadow:0 3px 10px -2px rgba(192,60,79,.35)}
-input[type=checkbox]{-webkit-appearance:none;appearance:none;width:20px;height:20px;flex:none;margin:0;border:1.8px solid var(--subtle);border-radius:6px;background:#fff;display:inline-grid;place-content:center;cursor:pointer;transition:background .15s,border-color .15s}
-input[type=checkbox]::after{content:'';width:10px;height:5px;border-left:2.4px solid #fff;border-bottom:2.4px solid #fff;transform:translateY(-1px) rotate(-45deg) scale(0);transition:transform .15s var(--ease)}
-input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
-input[type=checkbox]:checked::after{transform:translateY(-1px) rotate(-45deg) scale(1)}
-input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
-@media(min-width:900px){.picker-wrap{align-items:center;padding:24px}.picker{border-radius:28px;max-width:380px}.pick-btn{font-size:14px}}
-
-/* ---------- motion ---------- */
-@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes sheetIn{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-@keyframes menuIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
-@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(-14px,12px)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(94,234,212,.25)}50%{box-shadow:0 0 0 6px rgba(94,234,212,.05)}}
-
-/* ---------- small phones ---------- */
-@media(max-width:360px){
-  .hero-title{font-size:38px}
-  .hero-stat{padding:10px;min-height:88px}
-  .hero-stat strong{font-size:32px}
-  h1{font-size:36px}
-  .fieldrow.three{grid-template-columns:1fr}
-}
-
-/* ---------- tablet ---------- */
-@media(min-width:600px){
-  .main{padding-left:28px;padding-right:28px}
-  .header{margin:0 -28px 8px;padding-left:28px;padding-right:28px}
-  .hero{padding:30px 30px 26px}
-  .hero-title{font-size:56px}
-  .hero-stats{max-width:560px}
-  .hero-quick{max-width:600px}
-  h1{font-size:50px}
-  .toolrow{flex-direction:row;align-items:center;justify-content:space-between}
-  .search{width:300px}
-  .filterrow{margin:0 0 18px;padding:0;flex-wrap:wrap;overflow:visible}
-  .cal-cell{min-height:66px}
-  .competition-card{padding:24px 24px 16px}
-  .timeline-scroll{margin:0 -24px;padding:22px 24px 8px}
-  .stage{width:148px}
-  .stage-edit{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 32px}
-  .stage-edit input:first-child,.stage-edit button:not(.pick-btn),.stage-edit .pick-btn{grid-column:auto;grid-row:auto}
-  .fieldrow.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-
-/* ---------- desktop ---------- */
-@media(min-width:900px){
-  .app{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1480px;margin:auto}
-  .sidebar{display:flex;flex-direction:column;position:sticky;top:0;height:100vh;padding:30px 18px 20px}
-  .brand{display:flex;align-items:center;gap:12px;padding:0 8px;margin-bottom:42px;text-decoration:none}
-  .brand-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;color:#fff;background:linear-gradient(150deg,#1c3d30,#2e5b48);font-family:var(--serif);font-style:italic;font-size:26px;line-height:1;box-shadow:0 8px 18px -6px rgba(36,75,59,.45)}
-  .side-caption{color:var(--subtle);font-size:10px;letter-spacing:1.6px;font-weight:800;padding:0 14px;margin:0 0 10px;text-transform:uppercase}
-  .nav{display:grid;gap:4px}
-  .nav a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--muted);border:1px solid transparent;border-radius:14px;padding:11px 14px;font-weight:700;font-size:13.5px;transition:background .2s,color .2s}
-  .nav a:hover:not(.active){background:rgba(22,20,43,.04);color:var(--ink)}
-  .nav a.active{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:var(--sh-1)}
-  .nav a.active .icon{color:var(--accent)}
-  .sidebar-foot{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
-  .sidebar-foot .hint{font-size:11.5px;color:var(--muted);line-height:1.6}
-  .linkbtn{border:0;background:transparent;color:var(--accent);display:inline-flex;align-items:center;gap:8px;padding:0;font-weight:700;font-size:12.5px;text-align:left}
-  .linkbtn:hover{text-decoration:underline}
-  .mobilebar{display:none}
-  .main{padding:22px clamp(28px,4vw,56px) 72px}
-  .header{position:static;margin:0 0 18px;padding:0;background:transparent}
-  .brandmobile{display:none}
-  .crumb{display:inline;font-size:12.5px;font-weight:600;color:var(--muted)}
-  .date-indicator{display:inline;font-size:12.5px;font-weight:600;color:var(--muted)}
-  #header-create{position:static;height:44px;padding:10px 20px;border-radius:999px;font-size:13.5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 6px 16px -4px rgba(67,56,202,.5)}
-  #header-create .icon{width:16px;height:16px}
-  .toast{bottom:28px}
-  .hero{padding:38px 40px 34px;margin-top:0}
-  .hero-title{font-size:66px}
-  .page-intro{padding:8px 0 26px}
-  .panel-pad{padding:22px}
-  .modal-wrap{align-items:center;padding:24px}
-  .dialog{width:min(600px,100%);height:auto;max-height:min(92dvh,900px);border-radius:28px;padding:26px 28px;box-shadow:0 20px 60px -15px rgba(22,20,43,.3)}
-  .dialog::before{display:none}
-  .field input,.field textarea,.field select,.subtask-edit input[type=text],.stage-edit input,.search{font-size:14px}
-  .hero-quick input{font-size:14.5px}
-  .cal-panel{padding:20px}
-  .cal-week,.cal-grid{gap:5px}
-  .cal-cell{min-height:84px;align-items:flex-start;padding:8px}
-  .cal-dots{justify-content:flex-start;padding-left:4px}
-}
-@media(min-width:1100px){
-  .home-layout,.calendar-layout{grid-template-columns:minmax(0,1.3fr) minmax(0,.85fr);gap:20px}
-  .home-left,.home-right{gap:20px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-}
-/* Gemini Settings and review states */
-.ai-setting-menu-button{font-weight:700!important;color:var(--accent)!important}
-#ai-settings-wrap{align-items:center!important;padding:20px 16px!important;box-sizing:border-box}
-.ai-settings-dialog{width:min(480px,100%)!important;height:auto!important;max-height:calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;border-radius:24px!important;padding:24px 22px calc(20px + env(safe-area-inset-bottom))!important;margin:auto!important;box-shadow:0 22px 60px -10px rgba(22,20,43,.35)!important;overflow-y:auto}
-.ai-settings-dialog .dialog-header{margin-bottom:18px}
-.ai-settings-dialog .dialog-header h2{font-size:24px}
-.ai-note{font-size:11.5px;color:var(--muted);line-height:1.55}
-.ai-note a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
-.ai-settings-help{padding:12px 14px;background:var(--bg-2);border-radius:12px;margin:10px 0 14px;color:var(--ink-2);border:1px solid var(--line)}
-.ai-settings-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
-.ai-btn-group{display:flex;gap:8px;align-items:center}
-.ai-review{border:1px solid var(--line-2);background:var(--accent-pale);color:var(--on-pale);padding:12px 14px;border-radius:14px;margin-bottom:14px;font-size:12px;line-height:1.55}
-.ai-review ul{margin:8px 0 0;padding-left:18px}
-.quick-mode{font-size:10.5px;color:var(--accent);font-weight:800;display:inline-flex;align-items:center;gap:4px}
-@media(max-width:600px){
-  .ai-settings-dialog{padding:22px 18px calc(20px + env(safe-area-inset-bottom))!important}
-  .ai-settings-actions{flex-direction:column-reverse;gap:10px}
-  .ai-settings-actions button,.ai-btn-group{width:100%}
-  .ai-btn-group button{flex:1}
-}
-</style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar"><a href="#home" class="brand" data-view="home"><span class="brand-icon">a.</span><span class="brand-title">academia.</span></a><div class="side-caption">Workspace</div><nav class="nav" id="desktop-nav"></nav><div class="sidebar-foot"><button class="linkbtn" id="side-backup"></button><div class="hint">Rencana sekolahmu, di satu tempat.<br>Data demo tersimpan di perangkat ini.</div></div></aside>
-<main class="main"><div class="frame"><header class="header"><div class="header-left"><span class="brandmobile" id="mobile-brand">academia.</span><span class="crumb" id="breadcrumb">Workspace / Overview</span></div><div class="header-actions"><span class="date-indicator" id="today-label"></span><div class="settings-wrap"><button class="iconbtn" aria-label="Pengaturan dan data" id="settings-button"></button><div class="settings-menu" id="settings-menu"><button data-action="ai-settings" class="ai-setting-menu-button">Gemini AI / API Key</button><button data-action="export">Ekspor cadangan JSON</button><button data-action="import">Impor cadangan JSON</button><button data-action="empty">Mulai dengan data kosong</button><button class="danger" data-action="reset">Pulihkan data contoh</button></div></div><button class="primary" id="header-create"></button></div></header><div id="home" class="view active"></div><div id="tasks" class="view"></div><div id="calendar" class="view"></div><div id="competitions" class="view"></div></div></main>
+<div id="login-gate" class="login-gate hidden" role="region" aria-label="Halaman Masuk"></div>
+
+<div id="app-shell">
+  <div class="app">
+    <aside class="sidebar">
+      <a href="#home" class="brand" data-view="home"><span class="brand-icon">a.</span><span class="brand-title">academia.</span></a>
+      <div class="side-caption">Workspace</div>
+      <nav class="nav" id="desktop-nav"></nav>
+      <div class="sidebar-foot">
+        <button class="linkbtn" id="side-backup"></button>
+        <div class="hint">Rencana sekolahmu, di satu tempat.<br>Tersinkron otomatis ke akunmu.</div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="frame">
+        <header class="header">
+          <div class="header-left">
+            <span class="brandmobile" id="mobile-brand">academia.</span>
+            <span class="crumb" id="breadcrumb">Workspace / Home</span>
+          </div>
+          <div class="header-actions">
+            <span class="date-indicator" id="today-label"></span>
+            <div class="settings-wrap">
+              <button class="iconbtn" aria-label="Pengaturan dan data" id="settings-button"></button>
+              <div class="settings-menu" id="settings-menu">
+                <div id="user-menu-summary"></div>
+                <button data-action="ai-settings" class="ai-setting-menu-button">Pengaturan AI (Gemini / OpenRouter)</button>
+                <button data-action="type-settings">Tipe & Warna Kalender</button>
+                <button data-action="export">Ekspor cadangan JSON</button>
+                <button data-action="import">Impor cadangan JSON</button>
+                <button data-action="empty">Mulai dengan data kosong</button>
+                <button data-action="reset">Pulihkan data contoh</button>
+                <button class="danger" data-action="logout">Keluar Akun</button>
+              </div>
+            </div>
+            <button class="primary" id="header-create"></button>
+          </div>
+        </header>
+        <div id="home" class="view active"></div>
+        <div id="tasks" class="view"></div>
+        <div id="calendar" class="view"></div>
+        <div id="notes" class="view"></div>
+      </div>
+    </main>
+  </div>
+  <nav class="mobilebar" id="mobile-nav" aria-label="Navigasi utama"></nav>
 </div>
-<nav class="mobilebar" id="mobile-nav" aria-label="Navigasi utama"></nav>
-<div class="modal-wrap" id="modal-wrap" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="dialog-header"><h2 id="modal-title">Tambah aktivitas</h2><button id="modal-close" class="iconbtn" aria-label="Tutup"></button></div><div class="type-select" id="modal-types"></div><div class="ai-review hidden" id="ai-review" role="status"></div><form id="entry-form" class="dialog-form" style="display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden"><div class="dialog-body"><div id="modal-fields"></div></div><div class="modal-actions"><button class="ghost destructive delete hidden" type="button" id="modal-delete">Hapus</button><button class="secondary" type="button" id="modal-cancel">Batal</button><button class="primary" type="submit" id="modal-save">Simpan</button></div></form></section></div>
-<div class="modal-wrap" id="ai-settings-wrap" role="presentation"><section class="dialog ai-settings-dialog" role="dialog" aria-modal="true" aria-labelledby="ai-settings-title"><div class="dialog-header"><h2 id="ai-settings-title">Gemini AI · Pengaturan</h2><button type="button" class="iconbtn" id="ai-settings-close" aria-label="Tutup pengaturan">✕</button></div>
-<form id="ai-settings-form" autocomplete="off">
-<div class="field"><label for="gemini-api-key">Gemini API Key</label><input id="gemini-api-key" name="apiKey" type="password" placeholder="Tempel API key dari Google AI Studio" autocomplete="off" autocapitalize="off" spellcheck="false"><small>Kunci tidak disertakan dalam ekspor cadangan Academia.</small></div>
-<div class="field"><label for="gemini-model">Model</label><select id="gemini-model" name="model"><option value="gemini-3.8-flash">gemini-3.8-flash</option><option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option></select></div>
-<label class="switchrow"><input type="checkbox" id="gemini-persist"> Ingat API key di perangkat ini</label>
-<div class="ai-note ai-settings-help">Tanpa centang, key hanya tersimpan selama sesi browser. Dengan centang, key tersimpan di browser Anda. <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Dapatkan API key di Google AI Studio</a>.</div>
-<p id="gemini-settings-feedback" class="ai-note" role="status"></p>
-<div class="ai-settings-actions"><button type="button" class="ghost destructive" id="gemini-forget">Hapus key</button><div class="ai-btn-group"><button type="button" class="secondary" id="gemini-test">Uji koneksi</button><button type="submit" class="primary">Simpan</button></div></div>
-</form></section></div>
-<div class="picker-wrap" id="picker-wrap" role="presentation"><section class="picker" id="picker" role="dialog" aria-modal="true" aria-labelledby="picker-title"><div class="picker-head"><h3 id="picker-title"></h3><button type="button" class="iconbtn" id="picker-close" aria-label="Tutup"></button></div><div class="picker-body" id="picker-body"></div><div class="picker-foot" id="picker-foot"></div></section></div>
-<div class="confirm-wrap" id="confirm-wrap" role="presentation"><section class="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-msg"><h2 id="confirm-title"></h2><p id="confirm-msg"></p><div class="confirm-actions"><button type="button" class="secondary" id="confirm-no">Batal</button><button type="button" class="primary" id="confirm-yes">Lanjutkan</button></div></section></div>
-<div id="toast" class="toast" role="status" aria-live="polite"></div><input type="file" id="import-input" accept="application/json,.json,text/plain" class="hidden">
-<script src="gemini-quickadd.js"></script>
-<script>
-'use strict';
-const ICON={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',tasks:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="m7 10 2 2 3-3M14 10h4M7 16h11"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',trophy:'<path d="M8 3h8v7a4 4 0 0 1-8 0zM8 5H4v3a4 4 0 0 0 4 4M16 5h4v3a4 4 0 0 1-4 4M12 14v5M8 21h8M9 19h6"/>',plus:'<path d="M12 5v14M5 12h14"/>',arrow:'<path d="M5 12h14m-7-7 7 7-7 7"/>',right:'<path d="m9 18 6-6-6-6"/>',left:'<path d="m15 18-6-6 6-6"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l-1.7 1.7a1.8 1.8 0 0 0-2-.4l-1 .4a1.8 1.8 0 0 0-1.1 1.6h-2.4a1.8 1.8 0 0 0-1.1-1.6l-1-.4a1.8 1.8 0 0 0-2 .4l-1.7-1.7a1.8 1.8 0 0 0 .4-2l-.4-1A1.8 1.8 0 0 0 4 12.9v-2.4a1.8 1.8 0 0 0 1.6-1.1l.4-1a1.8 1.8 0 0 0-.4-2l1.7-1.7a1.8 1.8 0 0 0 2 .4l1-.4A1.8 1.8 0 0 0 11.4 3h2.4a1.8 1.8 0 0 0 1.1 1.6l1 .4a1.8 1.8 0 0 0 2-.4l1.7 1.7a1.8 1.8 0 0 0-.4 2l.4 1a1.8 1.8 0 0 0 1.6 1.1v2.4a1.8 1.8 0 0 0-1.6 1.1z"/>',check:'<path d="m5 12 4 4L19 6"/>',close:'<path d="M18 6 6 18M6 6l12 12"/>',more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',book:'<path d="M4 4.5C7 3 10 3 12 5c2-2 5-2 8-.5V20c-3-1.5-6-1.5-8 .5-2-2-5-2-8-.5zM12 5v15"/>',repeat:'<path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/>',flag:'<path d="M5 21V4m0 1c6-3 8 3 14 0v10c-6 3-8-3-14 0"/>',filter:'<path d="M4 5h16M7 12h10M10 19h4"/>',spark:'<path d="m12 2 2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/>',file:'<path d="M5 3h10l4 4v14H5zM15 3v5h4M8 12h8M8 16h8"/>',layers:'<path d="m12 3 9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/>'};
-ICON.down='<path d="m6 9 6 6 6-6"/>';
-const icon=(name,cl='')=>`<svg class="icon ${cl}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]||ICON.file}</svg>`;
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const uid=()=>globalThis.crypto?.randomUUID?.()||'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
-const pad=n=>String(n).padStart(2,'0');
-const toISO=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-const parseISO=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s||''))return null;const [y,m,d]=s.split('-').map(Number),t=new Date(y,m-1,d,12);return toISO(t)===s?t:null};
-const addDays=(s,n)=>{const d=parseISO(s);if(!d)return null;d.setDate(d.getDate()+n);return toISO(d)};
-const localToday=()=>toISO(new Date());
-const fmt=(s,opt={day:'numeric',month:'short'})=>{const d=parseISO(s);return d?new Intl.DateTimeFormat('id-ID',opt).format(d):'Belum dijadwalkan'};
-const fmtFull=s=>fmt(s,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-const MONTHS=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-const TYPES={task:'Tugas',exam:'Ulangan',study:'Belajar',event:'Acara',competition:'Lomba'};
-const navs=[['home','Home','home'],['tasks','Tasks','tasks'],['calendar','Calendar','calendar'],['competitions','Competitions','trophy']];
-const STORAGE='academia-clean-v03';
-const example=()=>{const now=localToday();return {version:3,settings:{},tasks:[{id:uid(),title:'Print materi Geografi',subject:'Geografi',due:addDays(now,1),notes:'Siapkan file sebelum berangkat sekolah.',done:false,subtasks:[],createdAt:now},{id:uid(),title:'Latihan soal Kimia',subject:'Kimia',due:addDays(now,3),notes:'Latihan mandiri',done:false,subtasks:[],createdAt:now},{id:uid(),title:'Latihan Trigonometri',subject:'Olimpiade Matematika',due:addDays(now,5),notes:'Bisa pecah menjadi beberapa bagian kalau perlu.',done:false,subtasks:[{id:uid(),title:'Identitas trigonometri',done:false},{id:uid(),title:'Soal latihan',done:false}],createdAt:now}],activities:[{id:uid(),type:'exam',title:'UH Biologi',subject:'Biologi',startDate:addDays(now,4),endDate:addDays(now,4),startTime:'08:00',endTime:'09:00',repeat:'none',repeatDays:[],repeatUntil:'',notes:'',competitionId:''},{id:uid(),type:'study',title:'Merangkum Sejarah',subject:'Sejarah',startDate:addDays(now,2),endDate:addDays(now,2),startTime:'19:00',endTime:'20:30',repeat:'none',repeatDays:[],repeatUntil:'',notes:'',competitionId:''}],competitions:[{id:uid(),name:'PHI Mathematics',subject:'Matematika',mode:'Individu',location:'',notes:'Contoh lomba, kamu bisa mengubah atau menghapusnya.',stages:[{id:uid(),title:'Penyisihan',date:addDays(now,-6),time:'09:00',done:true},{id:uid(),title:'Semifinal',date:addDays(now,3),time:'09:00',done:false},{id:uid(),title:'Final',date:addDays(now,14),time:'09:00',done:false}]}]}};
-function load(){try{const raw=localStorage.getItem(STORAGE);if(raw){const d=JSON.parse(raw);if(Array.isArray(d.tasks)&&Array.isArray(d.activities)&&Array.isArray(d.competitions))return d}}catch(e){}return example()}
-let db=load(),view='home',taskFilter='active',taskQuery='',calendarMode='month',calCursor=new Date(new Date().getFullYear(),new Date().getMonth(),1),picked=localToday(),calFilters=new Set(['task','exam','study','competition','event']);
-let editing=null,modalType='task',draftSubtasks=[],draftStages=[],modalDraft=null,toastTimer=null,aiReviewWarnings=null,quickBusy=false;
-function save(){try{localStorage.setItem(STORAGE,JSON.stringify(db))}catch(e){toast('Penyimpanan browser penuh atau tidak tersedia. Ekspor cadangan.')}}
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2700)}
-function daysBetween(a,b){const d=parseISO(a),e=parseISO(b);return d&&e?Math.round((e-d)/86400000):0}
-function typeHint(obj){return obj.type==='task'?'Tenggat':obj.type==='exam'?'Ulangan':obj.type==='study'?'Belajar':obj.type==='competition'?'Lomba':'Acara'}
-function taskDue(t){return t.due?fmt(t.due):'Tanpa tenggat'}
-function taskPercent(t){const a=t.subtasks||[];return a.length?Math.round(100*a.filter(s=>s.done).length/a.length):null}
-function isOverdue(t){return !t.done&&t.due&&t.due<localToday()}
-function tasksOrdered(){return [...db.tasks].sort((a,b)=>Number(a.done)-Number(b.done)||(a.due||'9999-12-31').localeCompare(b.due||'9999-12-31')||String(a.title).localeCompare(String(b.title)))}
-function occurrences(act,start,end){const result=[];if(!parseISO(act.startDate))return result;let s=act.startDate,limit=act.repeatUntil||(act.endDate&&act.endDate>s?act.endDate:end);const final=act.repeat==='none'?(act.endDate||s):limit;
-  if(act.repeat==='none'){if(final<start||s>end)return result;let cursor=s,ctr=0;while(cursor&&cursor<=final&&ctr<500){if(cursor>=start&&cursor<=end)result.push({date:cursor});cursor=addDays(cursor,1);ctr++}return result}
-  if(final<start||s>end)return result;let cursor=s,ctr=0;const wd=act.repeatDays||[];while(cursor&&cursor<=final&&ctr<740){const day=parseISO(cursor).getDay();if(cursor>=start&&cursor<=end&&(act.repeat==='daily'||(act.repeat==='weekly'?(wd.length?wd.includes(day):day===parseISO(s).getDay()):false)))result.push({date:cursor});cursor=addDays(cursor,1);ctr++}return result}
-function allEvents(start,end){const result=[];for(const t of db.tasks){if(t.due&&t.due>=start&&t.due<=end)result.push({id:t.id,kind:'task',date:t.due,title:t.title,subtitle:t.subject||'Tugas',time:'',done:t.done})}for(const a of db.activities){for(const occ of occurrences(a,start,end))result.push({id:a.id,kind:a.type,date:occ.date,title:a.title,subtitle:a.subject||TYPES[a.type],time:a.startTime||'',endTime:a.endTime||''})}for(const c of db.competitions){for(const s of c.stages||[]){if(s.date&&s.date>=start&&s.date<=end)result.push({id:c.id,stageId:s.id,kind:'competition',date:s.date,title:s.title+' · '+c.name,subtitle:c.subject||'Lomba',time:s.time||'',done:s.done})}}return result.sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'99:99').localeCompare(b.time||'99:99')||a.title.localeCompare(b.title))}
-const evVisible=e=>calFilters.has(e.kind);
-function filteredEvents(start,end){return allEvents(start,end).filter(evVisible)}
-function formatEventTime(e){return e.time?(e.endTime?`${e.time}–${e.endTime}`:e.time):typeHint({type:e.kind})==='Tenggat'?'Deadline':'Sepanjang hari'}
-function go(next){view=next;location.hash=next;document.getElementById('settings-menu').classList.remove('show');render();window.scrollTo({top:0,behavior:'instant'})}
-function renderNav(){let links=navs.map(([key,name,ic])=>`<a href="#${key}" data-view="${key}" class="${view===key?'active':''}" ${view===key?'aria-current="page"':''}>${icon(ic)}<span>${name}</span></a>`).join('');document.getElementById('desktop-nav').innerHTML=links;document.getElementById('mobile-nav').innerHTML=links;document.getElementById('breadcrumb').textContent='Workspace / '+(navs.find(n=>n[0]===view)?.[1]||'Home')}
-function render(){renderNav();for(const key of ['home','tasks','calendar','competitions'])document.getElementById(key).classList.toggle('active',key===view);document.getElementById('today-label').textContent=fmt(localToday(),{weekday:'short',day:'numeric',month:'long',year:'numeric'});if(view==='home')renderHome();if(view==='tasks')renderTasks();if(view==='calendar')renderCalendar();if(view==='competitions')renderCompetitions()}
-function heading(label,title,desc){return `<div class="page-intro"><div class="eyebrow">${label}</div><h1>${title}</h1><p>${desc}</p></div>`}
-function taskRow(t){
-  const subtasks=t.subtasks||[];
-  const subtasksHTML=subtasks.length?`<div class="subtask-checklist">${subtasks.map((s,i)=>`<div class="subtask-item"><button type="button" class="sub-tick ${s.done?'done':''}" data-toggle-subtask="${esc(t.id)}" data-subtask-index="${i}" title="${s.done?'Batalkan':'Selesai'}" aria-label="Tandai subtugas ${esc(s.title)}">${s.done?icon('check','sm'):''}</button><span class="sub-title ${s.done?'done':''}">${esc(s.title)}</span></div>`).join('')}</div>`:'';
-  const pct=taskPercent(t);
-  return `<div class="task-line"><button class="tick ${t.done?'done':''}" data-toggle-task="${esc(t.id)}" title="${t.done?'Tandai belum selesai':'Tandai selesai'}" aria-label="${t.done?'Batalkan selesai':'Selesaikan'} ${esc(t.title)}">${t.done?icon('check','sm'):''}</button><div class="item-text"><strong class="${t.done?'finished':''}">${esc(t.title)}</strong><div class="row-sub">${esc(t.subject||'Umum')} · ${esc(taskDue(t))}${isOverdue(t)?' · <span style="color:var(--red)">Terlambat</span>':''}</div>${subtasksHTML}</div>${pct!==null?`<span class="tail" title="Progres subtugas">${pct}%</span>`:''}<button class="row-open" data-edit-task="${esc(t.id)}" title="Lihat detail tugas" aria-label="Buka ${esc(t.title)}">${icon('right','sm')}</button></div>`}
-function eventRow(e,dates=true){return `<div class="agenda-row"><div class="daybox"><small>${fmt(e.date,{month:'short'})}</small><strong>${parseISO(e.date).getDate()}</strong></div><div class="agenda-info"><strong><span class="type-dot ${e.kind}"></span>${esc(e.title)}</strong><span class="row-sub">${esc(e.subtitle)} · ${esc(formatEventTime(e))}</span></div><button class="row-open" data-open-event="${esc(e.id)}" data-kind="${e.kind}" title="Lihat detail">${icon('right','sm')}</button></div>`}
-function homeTasks(){const ts=tasksOrdered().filter(t=>!t.done).slice(0,5);return ts.length?ts.map(taskRow).join(''):`<div class="empty">Tidak ada tugas aktif. Kamu bisa menambahkan tugas lewat Quick Add.</div>`}
-function renderHome(){const today=localToday(),end=addDays(today,13),upcoming=allEvents(today,end).filter(e=>!(e.kind==='task'&&e.done)).slice(0,6);
-  const active=db.tasks.filter(t=>!t.done).length,overdue=db.tasks.filter(isOverdue).length;
-  const compCount=db.competitions.length;
-  const greeting=new Date().getHours()<11?'Selamat pagi':new Date().getHours()<15?'Selamat siang':new Date().getHours()<18?'Selamat sore':'Selamat malam';
 
-  const heroHTML=`<section class="hero" aria-label="Ringkasan Utama">
-    <div class="hero-top">
-      <span class="hero-date">${icon('calendar','sm')} ${fmt(today,{weekday:'long',day:'numeric',month:'short'})}</span>
-      <span class="hero-chip ${overdue?'warn':''}"><i></i>${overdue?`${overdue} tugas terlambat`:active?`${active} tugas menanti`:'Semua tugas selesai'}</span>
+<!-- Modal Tambah / Edit Aktivitas & Catatan -->
+<div class="modal-wrap" id="modal-wrap" role="presentation">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="dialog-header">
+      <h2 id="modal-title">Tambah aktivitas</h2>
+      <button id="modal-close" class="iconbtn" aria-label="Tutup"></button>
     </div>
-    <h1 class="hero-title">${greeting}, <em>pelajar.</em></h1>
-    <p class="hero-sub">Kelola ritme belajarmu, pantau tenggat tugas, dan siapkan tahapan lomba dalam satu ruang kerja yang tenang.</p>
-    
-    <form class="hero-quick" id="quick-form">
-      ${icon('spark','sm')}
-      <input id="quick-input" autocomplete="off" maxlength="260" aria-label="Tambah tugas atau jadwal cepat" placeholder="Tulis tugas atau jadwal (Enter)..." required>
-      <button type="submit" aria-label="Tambah">${icon('arrow','sm')}</button>
+    <div class="type-select" id="modal-types"></div>
+    <div class="ai-review hidden" id="ai-review" role="status"></div>
+    <form id="entry-form" class="dialog-form" style="display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden">
+      <div class="dialog-body"><div id="modal-fields"></div></div>
+      <div class="modal-actions">
+        <button class="ghost destructive delete hidden" type="button" id="modal-delete">Hapus</button>
+        <button class="secondary" type="button" id="modal-cancel">Batal</button>
+        <button class="primary" type="submit" id="modal-save">Simpan</button>
+      </div>
     </form>
-  </section>`;
+  </section>
+</div>
 
-  document.getElementById('home').innerHTML=heroHTML+`<div class="home-layout"><div class="home-left"><section class="panel panel-pad"><div class="section-head"><h2><span class="sh-ic">${icon('tasks','sm')}</span>Tugas Terdekat <span class="count">${active}</span></h2><button data-view="tasks" class="text-link">Lihat semua ${icon('right','sm')}</button></div><div class="metric-line"><div><div class="tiny muted">${overdue?`<b style="color:var(--red)">${overdue} melewati tenggat</b> · prioritaskan sekarang`:'Selesaikan tugas sesuai jadwal dan targetmu.'}</div></div></div>${homeTasks()}</section></div><div class="home-right"><section class="panel panel-pad"><div class="section-head"><h2><span class="sh-ic green">${icon('calendar','sm')}</span>Agenda <span class="count">${upcoming.length}</span></h2><button data-view="calendar" class="text-link">Kalender ${icon('right','sm')}</button></div>${upcoming.length?upcoming.map(e=>eventRow(e)).join(''):'<div class="empty">Belum ada agenda dalam dua minggu ke depan.</div>'}</section><section class="panel panel-pad"><div class="section-head"><h2><span class="sh-ic purple">${icon('trophy','sm')}</span>Kompetisi <span class="count">${compCount}</span></h2><button data-view="competitions" class="text-link">Semua ${icon('right','sm')}</button></div>${db.competitions.length?db.competitions.slice(0,2).map(c=>{const next=[...(c.stages||[])].filter(s=>!s.done&&s.date>=today).sort((a,b)=>a.date.localeCompare(b.date))[0];return `<div class="agenda-row clickable" data-open-comp="${esc(c.id)}"><div class="daybox trophy">${icon('trophy','sm')}</div><div class="agenda-info"><strong>${esc(c.name)}</strong><span class="row-sub">${next?esc(next.title)+' · '+fmt(next.date):'Tidak ada tahap mendatang'}</span></div>${icon('right','sm')}</div>`}).join(''):'<div class="empty">Belum ada lomba. Tambahkan lewat tombol Tambah.</div>'}</section></div></div>`}
-function renderTasks(){const list=tasksOrdered().filter(t=>(taskFilter==='all'||(taskFilter==='active'?!t.done:t.done))&&`${t.title} ${t.subject||''} ${t.notes||''}`.toLocaleLowerCase('id').includes(taskQuery.toLocaleLowerCase('id')));document.getElementById('tasks').innerHTML=heading('ASSIGNMENTS','My tasks','Semua PR, proyek, latihan mandiri, dan pekerjaan kelas yang belum selesai.')+`<div class="toolrow"><div class="tabs">${[['active','Aktif'],['done','Selesai'],['all','Semua']].map(([v,n])=>`<button class="tab ${taskFilter===v?'active':''}" data-task-filter="${v}">${n}</button>`).join('')}</div><input class="search" id="task-search" type="search" placeholder="Cari tugas atau mapel..." value="${esc(taskQuery)}" aria-label="Cari tugas"></div><div class="panel task-table">${list.length?list.map(taskRow).join(''):'<div class="empty">Tidak ada tugas yang cocok.</div>'}</div>`}
-function calendarHTML(){const year=calCursor.getFullYear(),month=calCursor.getMonth(),start=new Date(year,month,1),offset=(start.getDay()+6)%7,gridStart=new Date(year,month,1-offset);const first=toISO(gridStart),end=addDays(first,41),evs=filteredEvents(first,end),byDate=new Map();for(const e of evs){const ar=byDate.get(e.date)||[];ar.push(e);byDate.set(e.date,ar)}let out='';for(let i=0;i<42;i++){const date=addDays(first,i),d=parseISO(date),ev=byDate.get(date)||[];out+=`<button type="button" class="cal-cell ${d.getMonth()!==month?'outside':''} ${date===picked?'selected':''} ${date===localToday()?'today':''}" data-pick="${date}" aria-label="${fmtFull(date)}${ev.length?', '+ev.length+' agenda':''}"><span class="daynum">${d.getDate()}</span><span class="cal-dots">${ev.slice(0,4).map(e=>`<i class="${e.kind}"></i>`).join('')}</span></button>`}return `<div class="cal-week">${['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(s=>`<span>${s}</span>`).join('')}</div><div class="cal-grid">${out}</div>`}
-function filtersHTML(){return `<div class="filterrow">${[['task','Tugas'],['exam','Ulangan'],['study','Belajar'],['competition','Lomba'],['event','Acara']].map(([k,n])=>`<button class="filterchip ${calFilters.has(k)?'':'off'}" data-cal-filter="${k}" aria-pressed="${calFilters.has(k)}"><span class="type-dot ${k}" style="margin-right:0"></span>${n}</button>`).join('')}</div>`}
-function renderCalendar(){const now=localToday(),start=calendarMode==='agenda'?now:calendarMode==='study'?addDays(now,-3):picked,end=calendarMode==='agenda'?addDays(now,59):calendarMode==='study'?addDays(now,59):picked;
-  let dateTitle=fmtFull(picked),events=filteredEvents(start,end).filter(e=>calendarMode!=='study'||e.kind==='study');const views=`<div class="calendar-modes">${[['month','Bulan'],['agenda','Agenda'],['study','Jadwal belajar']].map(([k,n])=>`<button data-calendar-mode="${k}" class="${calendarMode===k?'active':''}">${n}</button>`).join('')}</div>`;
-  const top=heading('ONE CALENDAR','Calendar','Tenggat tugas, ulangan, sesi belajar, dan tahapan lomba dalam satu kalender.')+`<div class="cal-main-head">${views}</div>${filtersHTML()}`;
-  if(calendarMode==='month'){document.getElementById('calendar').innerHTML=top+`<div class="calendar-layout"><section class="panel cal-panel"><div class="cal-toolbar"><h2>${MONTHS[calCursor.getMonth()]} ${calCursor.getFullYear()}</h2><div class="cal-nav"><button class="iconbtn" data-month-shift="-1" title="Bulan sebelumnya">${icon('left','sm')}</button><button class="iconbtn" data-month-shift="1" title="Bulan berikutnya">${icon('right','sm')}</button></div></div>${calendarHTML()}</section><section class="panel day-panel"><div class="eyebrow">SELECTED DAY</div><div class="selected-day">${fmt(picked,{weekday:'long',day:'numeric',month:'long'})}</div><div class="selected-day-sub">Agenda pada tanggal ini</div>${events.length?events.map(eventRow).join(''):'<div class="empty">Tidak ada agenda di tanggal ini.</div>'}</section></div>`;return}
-  const group=new Map();for(const e of events){if(!group.has(e.date))group.set(e.date,[]);group.get(e.date).push(e)}const groups=[...group.entries()].map(([d,rows])=>`<div class="agenda-group"><strong>${fmt(d,{weekday:'long',day:'numeric',month:'long'})}</strong>${rows.map(eventRow).join('')}</div>`).join('');document.getElementById('calendar').innerHTML=top+`<section class="panel panel-pad"><div class="section-head"><h2>${calendarMode==='study'?'Sesi belajar mendatang':'Agenda 60 hari ke depan'}</h2><span class="tiny muted">${events.length} kegiatan</span></div>${groups||'<div class="empty">Belum ada kegiatan dalam rentang ini.</div>'}</section>`}
-function renderCompetitions(){const sorted=[...db.competitions].sort((a,b)=>{const next=c=>[...(c.stages||[])].filter(s=>!s.done&&s.date>=localToday()).sort((x,y)=>x.date.localeCompare(y.date))[0]?.date||'9999-12-31';return next(a).localeCompare(next(b))});const cards=sorted.map(c=>{const stages=[...(c.stages||[])].sort((a,b)=>a.date.localeCompare(b.date));const next=stages.find(s=>!s.done&&s.date>=localToday());const allDone=stages.length&&stages.every(s=>s.done);return `<section class="competition-card"><div class="competition-top"><div><h2>${esc(c.name)}</h2><div class="competition-meta">${esc([c.subject,c.mode,c.location].filter(Boolean).join(' · ')||'Lomba akademik')}</div></div><span class="pill ${allDone?'':'on'}">${allDone?'Selesai':next?'Aktif':'Tanpa jadwal'}</span></div><div class="timeline-scroll"><div class="timeline">${stages.length?stages.map(s=>`<div class="stage ${s.done?'passed':''} ${next?.id===s.id?'next':''}"><button type="button" class="round" data-stage-toggle="${esc(c.id)}" data-stage-id="${esc(s.id)}" aria-label="${s.done?'Batalkan selesai':'Tandai selesai'} tahap ${esc(s.title)}">${s.done?icon('check','sm'):''}</button><strong>${esc(s.title)}</strong><small>${fmt(s.date)}${s.time?' · '+esc(s.time):''}</small></div>`).join(''):'<span class="muted tiny">Belum ada tahapan.</span>'}</div></div><div class="comp-bottom"><span class="tiny muted">${next?`Berikutnya: ${esc(next.title)} · ${fmt(next.date)}`:allDone?'Semua tahap telah selesai':'Tambahkan jadwal tahapan'}</span><button class="text-link" data-open-comp="${esc(c.id)}">Detail & edit ${icon('right','sm')}</button></div></section>`}).join('');document.getElementById('competitions').innerHTML=heading('THE NEXT CHALLENGE','Competitions','Timeline setiap lomba langsung terlihat. Ketuk sebuah tahap untuk menandainya selesai.')+`<div class="competition-list">${cards||'<div class="panel empty">Belum ada lomba. Tekan Tambah, lalu pilih Lomba.</div>'}</div>`}
-function modalOpen(type='task',record=null){
-  aiReviewWarnings=null;modalType=type;editing=record?record.id:null;
-  draftSubtasks=(record?.subtasks||[]).map(s=>({...s}));
-  draftStages=(record?.stages||[]).map(s=>({...s}));
-  modalDraft=null;
-  document.getElementById('modal-wrap').classList.add('show');
-  document.body.style.overflow='hidden';
-  renderModal(record);
-  // Only autofocus if desktop or pointer is fine (mouse). On touch screens, let user view form first without Gboard jarring jump.
-  if(window.matchMedia('(pointer:fine)').matches){
-    setTimeout(()=>document.querySelector('#modal-fields [name="title"]')?.focus(),40);
-  }
-}
-function modalClose(){aiReviewWarnings=null;document.getElementById('modal-wrap').classList.remove('show');document.body.style.overflow='';editing=null;modalDraft=null}
-const formField=(label,name,value='',type='text',props='')=>`<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" enterkeyhint="next" autocomplete="off" ${props}></div>`;
-const selectField=(label,name,items,value='')=>`<div class="field"><label for="f-${name}">${label}</label><select id="f-${name}" name="${name}">${items.map(([v,n])=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(n)}</option>`).join('')}</select></div>`;
-function subtaskEditors(){return `<div class="subtask-list" id="subtask-editors">${draftSubtasks.map((s,i)=>`<div class="subtask-edit"><input type="checkbox" data-subtask-check="${i}" ${s.done?'checked':''} aria-label="Status subtugas"><input type="text" data-subtask-text="${i}" value="${esc(s.title)}" placeholder="Nama subtugas" maxlength="120"><button type="button" title="Hapus subtugas" data-subtask-remove="${i}">${icon('close','sm')}</button></div>`).join('')}</div><button class="add-inline" type="button" id="add-subtask">${icon('plus','sm')} Tambah subtask (opsional)</button>`}
-function stageEditors(){return `<div class="stages-list" id="stage-editors">${draftStages.map((s,i)=>`<div class="stage-edit"><input type="text" data-stage-title="${i}" value="${esc(s.title)}" placeholder="Nama tahap" aria-label="Nama tahapan ${i+1}" maxlength="80"><input type="date" data-stage-date="${i}" value="${esc(s.date||'')}" aria-label="Tanggal tahapan ${i+1}"><button title="Hapus tahap" type="button" data-stage-remove="${i}">${icon('close','sm')}</button></div>`).join('')}</div><button class="add-inline" id="add-stage" type="button">${icon('plus','sm')} Tambah tahapan</button><div class="tiny muted" style="margin-top:8px">Isi nama dan tanggal setiap tahap. Semua tahap muncul di kalender.</div>`}
-function renderAIReview(){
-  const el=document.getElementById('ai-review');
-  if(!el)return;
-  if(!aiReviewWarnings){el.classList.add('hidden');el.textContent='';return}
-  el.classList.remove('hidden');
-  el.innerHTML='<strong>Periksa hasil Gemini sebelum menyimpan</strong><div>AI mengisi kolom di bawah secara otomatis. Kamu bebas menyesuaikan sebelum menyimpan.</div>'+(aiReviewWarnings.length?'<ul>'+aiReviewWarnings.map(w=>'<li>'+esc(w)+'</li>').join('')+'</ul>':'');
-}
-function renderModal(r=null){const current=r||modalDraft||getEditing();document.getElementById('modal-title').textContent=(editing?'Edit ':'Tambah ')+TYPES[modalType];document.getElementById('modal-delete').classList.toggle('hidden',!editing);document.getElementById('modal-types').innerHTML=editing?'':Object.keys(TYPES).map(k=>`<button type="button" data-modal-type="${k}" class="${k===modalType?'active':''}">${TYPES[k]}</button>`).join('');
-  let content='';
-  if(modalType==='task'){
-    content=formField('Nama tugas *','title',current?.title||'','text','required maxlength="180" placeholder="Misalnya: Latihan soal Kimia"')+formField('Mata pelajaran','subject',current?.subject||'','text','maxlength="80" placeholder="Kimia"')+formField('Deadline (opsional)','due',current?.due||'','date')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea id="f-notes" name="notes" placeholder="Instruksi atau tautan penting...">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Subtasks</h3><span class="tiny muted">Tidak wajib</span></div>`+subtaskEditors();
-  }else if(modalType==='competition'){
-    content=formField('Nama lomba *','title',current?.name??current?.title??'','text','required maxlength="160" placeholder="Misalnya: Olimpiade Matematika"')+`<div class="fieldrow">${formField('Bidang','subject',current?.subject||'','text','placeholder="Matematika"')}${selectField('Kategori','mode',[['Individu','Individu'],['Tim','Tim'],['Lainnya','Lainnya']],current?.mode||'Individu')}</div>`+formField('Lokasi / penyelenggara','location',current?.location||'','text','placeholder="Opsional"')+`<div class="field"><label for="f-notes">Catatan</label><textarea name="notes" id="f-notes" placeholder="Ketentuan, link pendaftaran, hal penting">${esc(current?.notes||'')}</textarea></div>`+`<div class="divider"></div><div class="section-head"><h3>Timeline lomba</h3><span class="tiny muted">Bisa tambah tahap sebanyak perlu</span></div>`+stageEditors();
-  }else if(modalType==='exam'){
-    const d=current||{},today=localToday();
-    content=formField('Nama ulangan *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: UH Biologi Sel"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Biologi"')+formField('Tanggal ulangan *','startDate',d.startDate||today,'date','required')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Kisi-kisi atau materi ulangan...">${esc(d.notes||'')}</textarea></div>`;
-  }else if(modalType==='study'){
-    const d=current||{},today=localToday();
-    const compOptions=[['','Tidak terhubung'],...db.competitions.map(c=>[c.id,c.name])];
-    content=formField('Sesi belajar *','title',d.title||'','text','required maxlength="180" placeholder="Misalnya: Merangkum Sejarah"')+formField('Mata pelajaran (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Sejarah"')+formField('Tanggal belajar *','startDate',d.startDate||today,'date','required')+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+selectField('Terkait lomba (opsional)','competitionId',compOptions,d.competitionId||'')+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian materi yang ingin dipelajari...">${esc(d.notes||'')}</textarea></div>`;
-  }else{
-    const d=current||{},today=localToday();
-    content=formField('Nama acara *','title',d.title||'','text','required maxlength="180" placeholder="Nama acara"')+formField('Keterangan (opsional)','subject',d.subject||'','text','maxlength="80" placeholder="Umum"')+formField('Tanggal *','startDate',d.startDate||today,'date','required')+formField('Tanggal selesai (opsional)','endDate',d.endDate||d.startDate||today,'date')+`<div class="fieldrow">${formField('Jam mulai','startTime',d.startTime||'','time')}${formField('Jam selesai','endTime',d.endTime||'','time')}</div>`+`<div class="field"><label for="f-notes">Catatan (opsional)</label><textarea name="notes" id="f-notes" placeholder="Rincian acara...">${esc(d.notes||'')}</textarea></div>`;
-  }
-  document.getElementById('modal-fields').innerHTML=content;enhanceControls(document.getElementById('modal-fields'));
-  renderAIReview();
-}
-function showAIReview(result){
-  const type=result.type;
-  const existingCompetition=type==='competition'?db.competitions.find(c=>c.name.toLocaleLowerCase('id')===(result.competitionName||result.title).toLocaleLowerCase('id')):null;
-  modalOpen(type,existingCompetition||null);
-  aiReviewWarnings=[...result.warnings];
-  if(type==='task'){
-    modalDraft={title:result.title,subject:result.subject,due:result.startDate,notes:result.notes};
-  }else if(type==='competition'){
-    const stage=result.stageName||'';
-    modalDraft={name:result.competitionName||result.title,subject:result.subject||existingCompetition?.subject||'',mode:existingCompetition?.mode||'Individu',notes:result.notes||existingCompetition?.notes||'',location:existingCompetition?.location||''};
-    if(stage&&result.startDate){
-      const duplicate=draftStages.some(s=>s.title.toLocaleLowerCase('id')===stage.toLocaleLowerCase('id')&&s.date===result.startDate);
-      if(!duplicate)draftStages.push({id:uid(),title:stage,date:result.startDate,time:'',done:false});
-      else aiReviewWarnings.push('Tahap lomba sudah tercatat. Tidak menambahkan duplikat.');
-    }
-    if(stage&&!result.startDate)aiReviewWarnings.push('Tanggal tahap '+stage+' belum jelas. Tambahkan melalui timeline.');
-  }else if(type==='exam'){
-    modalDraft={title:result.title,subject:result.subject,startDate:result.startDate||localToday(),endDate:result.startDate||localToday(),startTime:'',endTime:'',repeat:'none',repeatDays:[],repeatUntil:'',notes:result.notes||'',competitionId:''};
-  }else{
-    modalDraft={title:result.title,subject:result.subject,startDate:result.startDate||localToday(),endDate:result.endDate||result.startDate||localToday(),startTime:result.startTime,endTime:result.endTime,repeat:'none',repeatDays:[],repeatUntil:'',notes:result.notes||'',competitionId:''};
-  }
-  renderModal();
-  document.querySelector('#modal-fields [name="title"]')?.focus();
-}
-async function handleQuickAdd(){
-  const input=document.getElementById('quick-input');
-  const text=input?.value.trim();
-  if(!text||quickBusy)return;
-  if(typeof AcademiaGemini==='undefined'||!AcademiaGemini.getKey()){quickSave(text);return}
-  quickBusy=true;
-  const btn=document.querySelector('#quick-form button[type=submit]');
-  const feedback=document.getElementById('quick-feedback');
-  if(btn){btn.disabled=true;btn.setAttribute('aria-busy','true')}
-  if(feedback){feedback.classList.remove('error');feedback.textContent='Gemini sedang memahami kegiatan...'}
-  try{
-    const result=await AcademiaGemini.parse(text);
-    showAIReview(result);
-    if(feedback)feedback.textContent='Hasil siap. Periksa formulir sebelum menyimpan.';
-  }catch(err){
-    if(feedback){feedback.classList.add('error');feedback.textContent=err.message||'Gemini gagal memproses input.'}
-    toast('Gemini gagal. Tidak ada aktivitas yang disimpan.');
-  }finally{
-    quickBusy=false;
-    if(btn){btn.disabled=false;btn.removeAttribute('aria-busy')}
-  }
-}
-function showAISettings(){
-  const dialog=document.getElementById('ai-settings-wrap');
-  document.getElementById('gemini-api-key').value=AcademiaGemini.getKey();
-  document.getElementById('gemini-model').value=AcademiaGemini.getModel();syncPick(document.getElementById('gemini-model'));
-  document.getElementById('gemini-persist').checked=AcademiaGemini.isPersistent();
-  document.getElementById('gemini-settings-feedback').textContent='';
-  dialog.classList.add('show');document.body.style.overflow='hidden';
-  document.getElementById('gemini-api-key').focus();
-}
-function closeAISettings(){document.getElementById('ai-settings-wrap').classList.remove('show');document.body.style.overflow=''}
-function saveAISettings(){
-  AcademiaGemini.setConfig({key:document.getElementById('gemini-api-key').value,
-    model:document.getElementById('gemini-model').value,persist:document.getElementById('gemini-persist').checked});
-  closeAISettings();render();toast(AcademiaGemini.getKey()?'Gemini AI siap dipakai.':'Pengaturan Gemini disimpan.');
-}
-function getEditing(){if(!editing)return null;return modalType==='task'?db.tasks.find(t=>t.id===editing):modalType==='competition'?db.competitions.find(c=>c.id===editing):db.activities.find(a=>a.id===editing)}
-function captureDraftForm(){const form=document.getElementById('entry-form');if(form){const f=new FormData(form);modalDraft=Object.fromEntries(f.entries())}}
-function commitDraftInputs(){document.querySelectorAll('[data-subtask-text]').forEach(el=>{const n=Number(el.dataset.subtaskText);if(draftSubtasks[n])draftSubtasks[n].title=el.value});document.querySelectorAll('[data-subtask-check]').forEach(el=>{const n=Number(el.dataset.subtaskCheck);if(draftSubtasks[n])draftSubtasks[n].done=el.checked});document.querySelectorAll('[data-stage-title]').forEach(el=>{const n=Number(el.dataset.stageTitle);if(draftStages[n])draftStages[n].title=el.value});document.querySelectorAll('[data-stage-date]').forEach(el=>{const n=Number(el.dataset.stageDate);if(draftStages[n])draftStages[n].date=el.value})}
-function openRecord(id,kind){if(kind==='task'){const item=db.tasks.find(t=>t.id===id);if(item)modalOpen('task',item);return}if(kind==='competition'){const item=db.competitions.find(c=>c.id===id);if(item)modalOpen('competition',item);return}const item=db.activities.find(a=>a.id===id);if(item)modalOpen(item.type,item)}
-function submitForm(form){commitDraftInputs();const f=new FormData(form),title=String(f.get('title')||'').trim();if(!title){toast('Isi nama kegiatan terlebih dahulu.');return}const notes=String(f.get('notes')||'').trim();let record;const wasEditing=!!editing;
-  if(modalType==='task'){
-    record={id:editing||uid(),title,subject:String(f.get('subject')||'').trim(),due:String(f.get('due')||''),notes,done:getEditing()?.done||false,subtasks:draftSubtasks.filter(s=>s.title.trim()).map(s=>({id:s.id||uid(),title:s.title.trim(),done:!!s.done})),createdAt:getEditing()?.createdAt||localToday()};
-    db.tasks=editing?db.tasks.map(x=>x.id===editing?record:x):[record,...db.tasks];
-  }else if(modalType==='competition'){
-    const stages=[];for(const s of draftStages){if(!s.title.trim()&&!s.date)continue;if(!s.title.trim()||!parseISO(s.date)){toast('Isi nama dan tanggal untuk setiap tahapan lomba.');return}stages.push({id:s.id||uid(),title:s.title.trim(),date:s.date,time:'',done:!!s.done})}
-    stages.sort((a,b)=>a.date.localeCompare(b.date));record={id:editing||uid(),name:title,subject:String(f.get('subject')||'').trim(),mode:String(f.get('mode')||'Individu'),location:String(f.get('location')||'').trim(),notes,stages};db.competitions=editing?db.competitions.map(x=>x.id===editing?record:x):[record,...db.competitions];
-  }else if(modalType==='exam'){
-    const startDate=String(f.get('startDate')||'');
-    if(!parseISO(startDate)){toast('Periksa tanggal ulangan.');return}
-    record={id:editing||uid(),type:'exam',title,subject:String(f.get('subject')||'').trim(),startDate,endDate:startDate,startTime:'',endTime:'',repeat:'none',repeatDays:[],repeatUntil:'',competitionId:'',notes};
-    db.activities=editing?db.activities.map(x=>x.id===editing?record:x):[record,...db.activities];
-  }else{
-    const startDate=String(f.get('startDate')||''),endDate=String(f.get('endDate')||startDate)||startDate;
-    if(!parseISO(startDate)||!parseISO(endDate)){toast('Periksa tanggal kegiatan.');return}if(endDate<startDate){toast('Tanggal akhir tidak boleh mendahului tanggal mulai.');return}
-    const startTime=String(f.get('startTime')||''),endTime=String(f.get('endTime')||'');
-    if(startTime&&endTime&&endTime<=startTime){toast('Jam selesai harus lebih besar daripada jam mulai.');return}
-    record={id:editing||uid(),type:modalType,title,subject:String(f.get('subject')||'').trim(),startDate,endDate,startTime,endTime,repeat:'none',repeatDays:[],repeatUntil:'',competitionId:modalType==='study'?String(f.get('competitionId')||''):'',notes};
-    db.activities=editing?db.activities.map(x=>x.id===editing?record:x):[record,...db.activities];
-  }
-  save();modalClose();render();toast(wasEditing?'Perubahan tersimpan.':'Berhasil ditambahkan.')}
-const DAYS={minggu:0,senin:1,selasa:2,rabu:3,kamis:4,jumat:5,sabtu:6};
-function extractDate(s){const lower=s.toLocaleLowerCase('id');let date='',endDate='',matched='';const base=parseISO(localToday());const monthPattern='januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|mei|jun|jul|agu|ags|sep|okt|nov|des';const mapMonth=m=>{const n=['jan','feb','mar','apr','mei','jun','jul','agu','sep','okt','nov','des'];const pref=m.substring(0,3);return pref==='ags'?7:n.indexOf(pref)};
-  let m=lower.match(new RegExp('\\b(\\d{1,2})\\s*(?:-|–|sampai|sd|s\\/d)\\s*(\\d{1,2})\\s*('+monthPattern+')(?:\\s+(20\\d{2}))?\\b','i'));
-  if(m){let y=Number(m[4]||base.getFullYear()),mo=mapMonth(m[3]);const a=toISO(new Date(y,mo,Number(m[1]),12)),b=toISO(new Date(y,mo,Number(m[2]),12));if(parseISO(a)&&parseISO(b)&&a<=b&&parseISO(a).getMonth()===mo&&parseISO(b).getMonth()===mo){date=a;endDate=b;matched=m[0]}}
-  if(!date){m=lower.match(new RegExp('\\b(\\d{1,2})\\s*('+monthPattern+')(?:\\s+(20\\d{2}))?\\b','i'));if(m){let y=Number(m[3]||base.getFullYear()),mo=mapMonth(m[2]),d=Number(m[1]);let raw=toISO(new Date(y,mo,d,12));if(parseISO(raw)?.getDate()===d&&parseISO(raw).getMonth()===mo){if(!m[3]&&raw<localToday())raw=toISO(new Date(y+1,mo,d,12));date=raw;endDate=raw;matched=m[0]}}}
-  if(!date){m=lower.match(/\b(hari ini|besok|lusa)\b/);if(m){const v=m[1];date=addDays(localToday(),v==='hari ini'?0:v==='besok'?1:2);endDate=date;matched=m[0]}}
-  if(!date){const daynames=Object.keys(DAYS).join('|');m=lower.match(new RegExp('\\b(?:hari\\s+)?('+daynames+')\\b'));if(m){let diff=(DAYS[m[1]]-base.getDay()+7)%7;date=addDays(localToday(),diff);endDate=date;matched=m[0]}}
-  return {date,endDate,matched}}
-function extractTimes(raw){let s=raw.toLowerCase().replace(/\b(pukul|pk|jam)\b/g,'').trim();const r=/(^|\s)(\d{1,2})([.:](\d{2}))?\s*(?:-|–|sampai|sd|s\/d)\s*(\d{1,2})([.:](\d{2}))?\s*(pagi|siang|sore|malam)?\b/i;let m=s.match(r);
-  const convert=(h,min,part)=>{let hh=Number(h);const mm=Number(min||0);if(hh>23||mm>59)return '';if(part==='malam'&&hh<12)hh+=12;if(part==='sore'&&hh<12)hh+=12;if(part==='siang'&&hh<11)hh+=12;if(part==='pagi'&&hh===12)hh=0;return pad(hh)+':'+pad(mm)};
-  if(m){const isExplicit=!!m[3]||!!m[6]||!!m[8]||Number(m[2])>12||Number(m[5])>12;if(isExplicit){const start=convert(m[2],m[4],m[8]),end=convert(m[5],m[7],m[8]);if(start&&end&&start<end)return {startTime:start,endTime:end,matched:m[0].trim()}}}
-  m=raw.toLowerCase().match(/\b(?:jam|pukul|pk)\s*(\d{1,2})(?:[.:](\d{2}))?\s*(pagi|siang|sore|malam)?\b/);
-  if(m){if(m[2]||m[3]||Number(m[1])>12){const time=convert(m[1],m[2],m[3]);if(time)return {startTime:time,endTime:'',matched:m[0]}}}
-  m=raw.match(/\b([01]?\d|2[0-3])[:.]([0-5]\d)\b/);if(m)return {startTime:pad(m[1])+':'+m[2],endTime:'',matched:m[0]};return {startTime:'',endTime:'',matched:''}}
-function quickParse(input){let text=input.trim();const lowered=text.toLowerCase();const date=extractDate(text),clock=extractTimes(date.matched?text.replace(date.matched,' '):text);
-  let type='task';if(/\b(uh|ulangan|uts|uas|ujian|asesmen|kuis)\b/i.test(lowered))type='exam';else if(/\b(belajar|merangkum|rangkum|mengulang materi|review materi)\b/i.test(lowered)||(/\b(latihan osn|latihan olimpiade)\b/i.test(lowered)&&(/setiap|pukul|jam|\d{1,2}[.:]\d{2}/i.test(lowered))))type='study';else if(/\b(final|semifinal|penyisihan|babak)\b/i.test(lowered)&&/\b(phi|osn|olimpiade|lomba|kompetisi)\b/i.test(lowered))type='competition';else if(/\b(rapat|upacara|kunjungan|acara|pertemuan)\b/i.test(lowered))type='event';
-  let title=text;
-  if(date.matched)title=title.replace(new RegExp(date.matched.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i'),' ');
-  if(clock.matched)title=title.replace(new RegExp(clock.matched.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i'),' ');
-  title=title.replace(/\b(setiap hari|setiap senin|setiap selasa|setiap rabu|setiap kamis|setiap jumat|setiap sabtu|setiap minggu|jam|pukul|setiap)\b/gi,' ').replace(/\s+/g,' ').trim().replace(/[,:;-]+$/,'').trim();if(!title)title=text;
-  const startTime=(type==='exam'||type==='competition')?'':clock.startTime;
-  const endTime=(type==='exam'||type==='competition')?'':clock.endTime;
-  return {type,title,startDate:date.date||'',endDate:date.endDate||date.date||'',startTime,endTime,repeat:'none',repeatDays:[],repeatUntil:''};}
-function quickSave(input){const p=quickParse(input);if(!p.title)return;
-  if(p.type==='task'){db.tasks.unshift({id:uid(),title:p.title,subject:'',due:p.startDate||'',notes:'',done:false,subtasks:[],createdAt:localToday()})}
-  else if(p.type==='competition'){
-    const label=/\b(final|semifinal|penyisihan)\b/i.exec(p.title)?.[1]||'Babak';const name=p.title.replace(/^(babak\s+)?(final|semifinal|penyisihan)\s*/i,'').trim()||p.title;
-    const found=db.competitions.find(c=>c.name.toLowerCase()===name.toLowerCase());const stage=p.startDate?{id:uid(),title:label[0].toUpperCase()+label.slice(1),date:p.startDate,time:'',done:false}:null;if(found&&stage)found.stages.push(stage);else if(!found)db.competitions.unshift({id:uid(),name,subject:'',mode:'Individu',location:'',notes:stage?'':('Tambahkan tanggal tahap '+label+'.'),stages:stage?[stage]:[]});
-  }else if(p.type==='exam'){
-    if(!p.startDate){modalOpen('exam');const f=document.querySelector('#modal-fields [name="title"]');if(f)f.value=p.title;toast('Tambahkan tanggal ulangan.');return}
-    db.activities.unshift({id:uid(),type:'exam',title:p.title,subject:'',startDate:p.startDate,endDate:p.startDate,startTime:'',endTime:'',repeat:'none',repeatDays:[],repeatUntil:'',notes:'',competitionId:''});
-  }else{
-    if(!p.startDate){const type=p.type;modalOpen(type);const f=document.querySelector('#modal-fields [name="title"]');if(f)f.value=p.title;toast('Tambahkan tanggal agar jadwal bisa disimpan.');return}
-    db.activities.unshift({id:uid(),type:p.type,title:p.title,subject:'',startDate:p.startDate,endDate:p.endDate||p.startDate,startTime:p.startTime,endTime:p.endTime,repeat:'none',repeatDays:[],repeatUntil:'',notes:'',competitionId:''});
-  }
-  save();render();toast('Ditambahkan. Ketuk aktivitas untuk mengubah detailnya.')}
-async function exportJSON(){
-  const fileName=`academia-backup-${localToday()}.json`;
-  const jsonStr=JSON.stringify(db,null,2);
-  const Cap=window.Capacitor;
-  const isNative=Boolean(Cap&&(typeof Cap.isNativePlatform==='function'?Cap.isNativePlatform():Cap.getPlatform&&Cap.getPlatform()!=='web'));
-  const FS=Cap?.Plugins?.Filesystem;
-  const SH=Cap?.Plugins?.Share;
+<!-- Modal Rencana Hari (Susun satu hari sekaligus - Fase 4) -->
+<div class="modal-wrap" id="dayplan-wrap" role="presentation">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dayplan-title">
+    <div class="dialog-header">
+      <h2 id="dayplan-title">Rencana Hari · Susun Sesi Belajar</h2>
+      <button id="dayplan-close" class="iconbtn" aria-label="Tutup"></button>
+    </div>
+    <form id="dayplan-form" style="display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden">
+      <div class="dialog-body" id="dayplan-body"></div>
+      <div class="modal-actions">
+        <button class="secondary" type="button" id="dayplan-cancel">Batal</button>
+        <button class="primary" type="submit">Simpan Jadwal Hari Ini</button>
+      </div>
+    </form>
+  </section>
+</div>
 
-  if(FS&&SH){
-    try{
-      const res=await FS.writeFile({path:fileName,data:jsonStr,directory:'CACHE',encoding:'utf8'});
-      try{await FS.writeFile({path:fileName,data:jsonStr,directory:'DOCUMENTS',encoding:'utf8'})}catch(_){}
-      await SH.share({title:fileName,text:`Cadangan data Academia (${localToday()})`,url:res.uri,dialogTitle:'Simpan atau Bagikan Cadangan JSON'});
-      toast('Cadangan JSON siap.');
-      return;
-    }catch(err){
-      if(err&&String(err).toLowerCase().includes('cancel'))return;
-      console.warn('Capacitor native share error:',err);
-    }
-  }
+<!-- Modal Pengaturan Tipe & Warna Kalender (Fase 3) -->
+<div class="modal-wrap" id="type-settings-wrap" role="presentation">
+  <section class="dialog ai-settings-dialog" role="dialog" aria-modal="true" aria-labelledby="type-settings-title">
+    <div class="dialog-header">
+      <h2 id="type-settings-title">Tipe & Warna Kalender</h2>
+      <button type="button" class="iconbtn" id="type-settings-close" aria-label="Tutup"></button>
+    </div>
+    <div class="dialog-body" id="type-settings-body"></div>
+    <div class="modal-actions">
+      <button type="button" class="primary" id="type-settings-done">Selesai</button>
+    </div>
+  </section>
+</div>
 
-  if(typeof navigator!=='undefined'&&typeof navigator.canShare==='function'&&typeof File!=='undefined'){
-    try{
-      const file=new File([jsonStr],fileName,{type:'application/json'});
-      if(navigator.canShare({files:[file]})){
-        await navigator.share({files:[file],title:fileName,text:`Cadangan data Academia (${localToday()})`});
-        toast('Cadangan JSON siap.');
-        return;
-      }
-    }catch(err){
-      if(err&&(err.name==='AbortError'||String(err).toLowerCase().includes('cancel')))return;
-      console.warn('Web Share files error:',err);
-    }
-  }
+<!-- Modal Pengaturan AI (Gemini + OpenRouter - Fase 5) -->
+<div class="modal-wrap" id="ai-settings-wrap" role="presentation">
+  <section class="dialog ai-settings-dialog" role="dialog" aria-modal="true" aria-labelledby="ai-settings-title">
+    <div class="dialog-header">
+      <h2 id="ai-settings-title">Pengaturan AI · Quick Add</h2>
+      <button type="button" class="iconbtn" id="ai-settings-close" aria-label="Tutup pengaturan">✕</button>
+    </div>
+    <form id="ai-settings-form" autocomplete="off">
+      <div id="ai-settings-body"></div>
+      <div class="ai-settings-actions">
+        <button type="button" class="ghost destructive" id="gemini-forget">Hapus key</button>
+        <div class="ai-btn-group">
+          <button type="button" class="secondary" id="gemini-test">Uji koneksi</button>
+          <button type="submit" class="primary">Simpan</button>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
 
-  if(!isNative){
-    try{
-      const blob=new Blob([jsonStr],{type:'application/json'});
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement('a');
-      a.href=url;a.download=fileName;
-      document.body.append(a);a.click();a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url),2000);
-      toast('Cadangan JSON siap diunduh.');
-      return;
-    }catch(err){
-      console.warn('Blob download error:',err);
-    }
-  }
+<!-- Custom Picker & Confirm Dialog -->
+<div class="picker-wrap" id="picker-wrap" role="presentation">
+  <section class="picker" id="picker" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+    <div class="picker-head">
+      <h3 id="picker-title"></h3>
+      <button type="button" class="iconbtn" id="picker-close" aria-label="Tutup"></button>
+    </div>
+    <div class="picker-body" id="picker-body"></div>
+    <div class="picker-foot" id="picker-foot"></div>
+  </section>
+</div>
 
-  if(typeof navigator!=='undefined'&&typeof navigator.share==='function'){
-    try{
-      await navigator.share({title:fileName,text:jsonStr,dialogTitle:'Simpan Teks Cadangan'});
-      toast('Cadangan berhasil dibagikan.');
-      return;
-    }catch(err){
-      if(err&&(err.name==='AbortError'||String(err).toLowerCase().includes('cancel')))return;
-    }
-  }
+<div class="confirm-wrap" id="confirm-wrap" role="presentation">
+  <section class="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-msg">
+    <h2 id="confirm-title"></h2>
+    <p id="confirm-msg"></p>
+    <div class="confirm-actions">
+      <button type="button" class="secondary" id="confirm-no">Batal</button>
+      <button type="button" class="primary" id="confirm-yes">Lanjutkan</button>
+    </div>
+  </section>
+</div>
 
-  try{
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      await navigator.clipboard.writeText(jsonStr);
-      toast('Data cadangan disalin ke papan klip.');
-      return;
-    }
-  }catch(_){}
-
-  const blob=new Blob([jsonStr],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=fileName;
-  document.body.append(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),2000);
-  toast('Cadangan JSON diproses.');
-}
-function importJSON(file){if(file.size>3e6){toast('File terlalu besar.');return}const reader=new FileReader();reader.onload=async()=>{try{const d=JSON.parse(reader.result);if(!d||!Array.isArray(d.tasks)||!Array.isArray(d.activities)||!Array.isArray(d.competitions))throw Error('format');if(!await askConfirm('Impor ini akan mengganti semua data Academia di perangkat ini. Lanjutkan?',{title:'Impor cadangan',ok:'Impor',danger:true}))return;db={version:3,settings:{},tasks:d.tasks.filter(x=>typeof x.id==='string'&&typeof x.title==='string').map(x=>({...x,subtasks:Array.isArray(x.subtasks)?x.subtasks:[]})),activities:d.activities.filter(x=>typeof x.id==='string'&&typeof x.title==='string'&&['study','exam','event'].includes(x.type)),competitions:d.competitions.filter(x=>typeof x.id==='string'&&typeof x.name==='string').map(x=>({...x,stages:Array.isArray(x.stages)?x.stages:[]}))};save();render();toast('Data berhasil diimpor.')}catch(err){toast('Format cadangan tidak valid.')}};reader.readAsText(file)}
-function onClick(e){const closest=selector=>e.target.closest(selector);
-  const nav=closest('[data-view]');if(nav){e.preventDefault();go(nav.dataset.view);return}
-  const filter=closest('[data-task-filter]');if(filter){taskFilter=filter.dataset.taskFilter;renderTasks();return}
-  const calMode=closest('[data-calendar-mode]');if(calMode){calendarMode=calMode.dataset.calendarMode;renderCalendar();return}
-  const calFilter=closest('[data-cal-filter]');if(calFilter){const k=calFilter.dataset.calFilter;calFilters.has(k)?calFilters.delete(k):calFilters.add(k);renderCalendar();return}
-  const pickedBtn=closest('[data-pick]');if(pickedBtn){picked=pickedBtn.dataset.pick;renderCalendar();return}
-  const shift=closest('[data-month-shift]');if(shift){calCursor=new Date(calCursor.getFullYear(),calCursor.getMonth()+Number(shift.dataset.monthShift),1);renderCalendar();return}
-  const toggleSub=closest('[data-toggle-subtask]');if(toggleSub){const t=db.tasks.find(x=>x.id===toggleSub.dataset.toggleSubtask);const idx=Number(toggleSub.dataset.subtaskIndex);if(t&&t.subtasks&&t.subtasks[idx]!==undefined){t.subtasks[idx].done=!t.subtasks[idx].done;if(t.subtasks.every(s=>s.done))t.done=true;save();render();toast(t.subtasks[idx].done?'Subtugas selesai.':'Subtugas kembali aktif.')}return}
-  const toggle=closest('[data-toggle-task]');if(toggle){const t=db.tasks.find(x=>x.id===toggle.dataset.toggleTask);if(t){t.done=!t.done;save();render();toast(t.done?'Tugas selesai.':'Tugas kembali aktif.')}return}
-  const openTask=closest('[data-edit-task]');if(openTask){openRecord(openTask.dataset.editTask,'task');return}
-  const openComp=closest('[data-open-comp]');if(openComp){openRecord(openComp.dataset.openComp,'competition');return}
-  const openEvent=closest('[data-open-event]');if(openEvent){openRecord(openEvent.dataset.openEvent,openEvent.dataset.kind);return}
-  const step=closest('[data-stage-toggle]');if(step){const c=db.competitions.find(x=>x.id===step.dataset.stageToggle),s=c?.stages?.find(x=>x.id===step.dataset.stageId);if(s){s.done=!s.done;save();render();toast(s.done?'Tahap lomba selesai.':'Tahap kembali aktif.')}return}
-  const changeType=closest('[data-modal-type]');if(changeType){modalType=changeType.dataset.modalType;draftSubtasks=[];draftStages=[];modalDraft=null;renderModal();return}
-  if(closest('#add-subtask')){captureDraftForm();commitDraftInputs();draftSubtasks.push({id:uid(),title:'',done:false});renderModal();document.querySelector('[data-subtask-text="'+(draftSubtasks.length-1)+'"]')?.focus();return}
-  if(closest('#add-stage')){captureDraftForm();commitDraftInputs();draftStages.push({id:uid(),title:'',date:'',time:'',done:false});renderModal();document.querySelector('[data-stage-title="'+(draftStages.length-1)+'"]')?.focus();return}
-  const rmSub=closest('[data-subtask-remove]');if(rmSub){captureDraftForm();commitDraftInputs();draftSubtasks.splice(Number(rmSub.dataset.subtaskRemove),1);renderModal();return}
-  const rmStage=closest('[data-stage-remove]');if(rmStage){captureDraftForm();commitDraftInputs();draftStages.splice(Number(rmStage.dataset.stageRemove),1);renderModal();return}
-  if(closest('#modal-close')||closest('#modal-cancel')){modalClose();return}
-  if(e.target.id==='modal-wrap'){modalClose();return}
-  if(closest('#modal-delete')){if(!editing)return;const id=editing,mt=modalType;askConfirm('Catatan ini akan dihapus permanen.',{title:'Hapus catatan?',ok:'Hapus',danger:true}).then(ok=>{if(!ok)return;if(mt==='task')db.tasks=db.tasks.filter(x=>x.id!==id);else if(mt==='competition'){db.competitions=db.competitions.filter(x=>x.id!==id);db.activities=db.activities.map(x=>x.competitionId===id?{...x,competitionId:''}:x)}else db.activities=db.activities.filter(x=>x.id!==id);save();modalClose();render();toast('Catatan dihapus.')});return}
-  if(closest('#settings-button')){document.getElementById('settings-menu').classList.toggle('show');return}
-  const action=closest('[data-action]');if(action){document.getElementById('settings-menu').classList.remove('show');switch(action.dataset.action){case'ai-settings':showAISettings();break;case'export':exportJSON();break;case'import':document.getElementById('import-input').click();break;case'empty':askConfirm('Kosongkan semua data demo? Unduh cadangan jika ingin menyimpan data sekarang.',{title:'Mulai dari kosong?',ok:'Kosongkan',danger:true}).then(ok=>{if(ok){db={version:3,settings:{},tasks:[],activities:[],competitions:[]};save();render();toast('Workspace kosong, siap kamu isi.')}});break;case'reset':askConfirm('Pulihkan data contoh? Ini akan mengganti catatan sekarang.',{title:'Pulihkan data contoh?',ok:'Pulihkan',danger:true}).then(ok=>{if(ok){db=example();save();render();toast('Data contoh dipulihkan.')}});break}return}
-  if(!closest('#settings-menu'))document.getElementById('settings-menu').classList.remove('show');
-}
-document.addEventListener('click',onClick);
-document.addEventListener('input',e=>{if(e.target.id==='task-search'){taskQuery=e.target.value;const s=e.target.selectionStart;renderTasks();document.getElementById('task-search').focus();document.getElementById('task-search').setSelectionRange(s,s)}});
-document.addEventListener('submit',e=>{if(e.target.id==='quick-form'){e.preventDefault();void handleQuickAdd()}if(e.target.id==='entry-form'){e.preventDefault();submitForm(e.target)}});
-document.getElementById('modal-delete').addEventListener('click',()=>{});
-document.getElementById('header-create').innerHTML=icon('plus','sm')+' Tambah';document.getElementById('header-create').onclick=()=>modalOpen(view==='competitions'?'competition':view==='calendar'&&calendarMode==='study'?'study':'task');
-document.getElementById('settings-button').innerHTML=icon('settings','sm');document.getElementById('modal-close').innerHTML=icon('close','sm');document.getElementById('side-backup').innerHTML=icon('download','sm')+' Cadangkan datamu';document.getElementById('side-backup').onclick=exportJSON;
-document.getElementById('import-input').addEventListener('change',e=>{if(e.target.files[0])importJSON(e.target.files[0]);e.target.value=''});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('modal-wrap').classList.contains('show'))modalClose();if((e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))&&view==='home'){e.preventDefault();document.getElementById('quick-input')?.focus()}});
-
-/* Gemini AI Settings Listeners */
-document.getElementById('ai-settings-close').addEventListener('click',closeAISettings);
-document.getElementById('ai-settings-wrap').addEventListener('click',e=>{if(e.target.id==='ai-settings-wrap')closeAISettings()});
-document.getElementById('ai-settings-form').addEventListener('submit',e=>{e.preventDefault();try{saveAISettings()}catch(err){document.getElementById('gemini-settings-feedback').textContent=err.message}});
-document.getElementById('gemini-forget').addEventListener('click',()=>{
-  AcademiaGemini.clearKey();document.getElementById('gemini-api-key').value='';document.getElementById('gemini-persist').checked=false;
-  document.getElementById('gemini-settings-feedback').textContent='Kunci API dihapus dari penyimpanan perangkat.';
-});
-document.getElementById('gemini-test').addEventListener('click',async()=>{
-  const status=document.getElementById('gemini-settings-feedback');const button=document.getElementById('gemini-test');
-  button.disabled=true;status.textContent='Menguji koneksi Gemini...';
-  try{
-    const parsed=await AcademiaGemini.parse('PR Kimia besok',{key:document.getElementById('gemini-api-key').value.trim(),model:document.getElementById('gemini-model').value});
-    status.textContent='Koneksi berhasil! Gemini mengenali: "'+parsed.title+'" ('+TYPES[parsed.type]+'). Tekan Simpan untuk mengaktifkan.';
-  }catch(err){status.textContent='Uji koneksi gagal: '+err.message}finally{button.disabled=false}
-});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('ai-settings-wrap').classList.contains('show'))closeAISettings()});
-
-/* ---------- Custom pickers (select / date / time) & confirm dialog ----------
-   Native <select>, <input type=date|time> stay in the DOM (hidden) as the value store so FormData keeps working;
-   a styled trigger button + bottom-sheet picker is rendered in their place. */
-const gid=id=>document.getElementById(id);
-const picker={el:null,kind:'',y:0,m:0,h:7,mi:0};
-const pickKind=el=>el.tagName==='SELECT'?'select':el.type;
-function pickLabelText(el){
-  if(el.tagName==='SELECT'){const o=el.options[el.selectedIndex];return o?o.textContent:''}
-  if(el.type==='date'){
-    if(!parseISO(el.value))return '';
-    if(el.closest&&el.closest('.stage-edit'))return fmt(el.value,{day:'numeric',month:'short',year:'numeric'});
-    return fmt(el.value,{day:'numeric',month:'long',year:'numeric'});
-  }
-  return el.value||'';
-}
-function syncPick(el){
-  const b=el&&el._btn;if(!b)return;
-  const kind=pickKind(el),txt=pickLabelText(el),ph=kind==='date'?'Pilih tanggal':kind==='time'?'Pilih jam':'Pilih';
-  b.innerHTML=`<span class="pick-val${txt?'':' is-empty'}">${esc(txt||ph)}</span>${icon(kind==='date'?'calendar':kind==='time'?'clock':'down','sm')}`;
-}
-function enhanceControls(root){
-  root.querySelectorAll('select:not([data-enh]),input[type=date]:not([data-enh]),input[type=time]:not([data-enh])').forEach(el=>{
-    el.dataset.enh='1';el.dataset.req=el.required?'1':'';el.required=false;el.classList.add('pick-native');el.tabIndex=-1;
-    const b=document.createElement('button');b.type='button';b.className='pick-btn';b.setAttribute('aria-haspopup','dialog');
-    const lab=el.id?document.querySelector('label[for="'+el.id+'"]'):null;
-    b.setAttribute('aria-label',((lab&&lab.textContent)||el.getAttribute('aria-label')||'Pilih').replace(/\s*\*\s*$/,''));
-    b._el=el;el._btn=b;el.after(b);syncPick(el);
-  });
-}
-function pickerOpen(el){
-  if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
-  picker.el=el;picker.kind=pickKind(el);
-  gid('picker-title').textContent=el._btn.getAttribute('aria-label');
-  if(picker.kind==='date'){const d=parseISO(el.value)||parseISO(localToday());picker.y=d.getFullYear();picker.m=d.getMonth();renderDatePicker()}
-  else if(picker.kind==='time'){const v=/^(\d{2}):(\d{2})$/.exec(el.value),n=new Date();picker.h=v?+v[1]:n.getHours();picker.mi=v?+v[2]:n.getMinutes();renderTimePicker()}
-  else renderSelectPicker();
-  el._btn.classList.add('open');gid('picker-wrap').classList.add('show');
-  if(picker.kind==='time')document.querySelectorAll('#picker-body .tp-col').forEach(c=>{const s=c.querySelector('.sel');if(s)c.scrollTop=s.offsetTop-(c.clientHeight-s.offsetHeight)/2});
-  else if(picker.kind==='select')gid('picker-body').querySelector('.pk-opt.sel')?.scrollIntoView({block:'center'});
-}
-function pickerClose(){gid('picker-wrap').classList.remove('show');if(picker.el&&picker.el._btn)picker.el._btn.classList.remove('open');picker.el=null}
-function pickerSet(v){const el=picker.el;if(!el)return;el.value=v;syncPick(el);el.dispatchEvent(new Event('change',{bubbles:true}));pickerClose()}
-function renderSelectPicker(){
-  const el=picker.el;
-  gid('picker-body').innerHTML='<div class="pk-list">'+[...el.options].map(o=>{const on=o.value===el.value;return `<button type="button" class="pk-opt${on?' sel':''}" data-pk-val="${esc(o.value)}"><span>${esc(o.textContent)}</span>${on?icon('check','sm'):''}</button>`}).join('')+'</div>';
-  gid('picker-foot').innerHTML='';
-}
-function renderDatePicker(){
-  const {y,m,el}=picker,cur=el.value,today=localToday(),offset=(new Date(y,m,1).getDay()+6)%7;let cells='';
-  for(let i=0;i<42;i++){const d=new Date(y,m,1-offset+i,12),iso=toISO(d);cells+=`<button type="button" class="dp-cell${d.getMonth()!==m?' out':''}${iso===cur?' sel':''}${iso===today?' today':''}" data-pk-date="${iso}" aria-label="${fmtFull(iso)}">${d.getDate()}</button>`}
-  gid('picker-body').innerHTML=`<div class="dp-top"><strong class="dp-month">${MONTHS[m]} ${y}</strong><div class="cal-nav"><button type="button" class="iconbtn" data-pk-shift="-1" aria-label="Bulan sebelumnya">${icon('left','sm')}</button><button type="button" class="iconbtn" data-pk-shift="1" aria-label="Bulan berikutnya">${icon('right','sm')}</button></div></div><div class="dp-week">${['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(s=>`<span>${s}</span>`).join('')}</div><div class="dp-grid">${cells}</div>`;
-  gid('picker-foot').innerHTML=(el.dataset.req?'':'<button type="button" class="ghost destructive" data-pk-clear>Hapus</button>')+'<button type="button" class="secondary" data-pk-today>Hari ini</button>';
-}
-function renderTimePicker(){
-  const col=(n,sel,attr)=>'<div class="tp-col">'+Array.from({length:n},(_,i)=>`<button type="button" class="tp-item${i===sel?' sel':''}" ${attr}="${i}">${pad(i)}</button>`).join('')+'</div>';
-  gid('picker-body').innerHTML=`<div class="tp-cols">${col(24,picker.h,'data-pk-h')}<span class="tp-sep">:</span>${col(60,picker.mi,'data-pk-mi')}</div>`;
-  gid('picker-foot').innerHTML=(picker.el.dataset.req?'':'<button type="button" class="ghost destructive" data-pk-clear>Hapus</button>')+'<button type="button" class="primary" data-pk-timeok>Selesai</button>';
-}
-document.addEventListener('click',e=>{
-  const t=e.target,c=s=>t.closest(s);
-  const pb=c('.pick-btn');if(pb&&pb._el){e.preventDefault();pickerOpen(pb._el);return}
-  if(!gid('picker-wrap').classList.contains('show'))return;
-  if(t.id==='picker-wrap'||c('#picker-close')){pickerClose();return}
-  let n;
-  if(n=c('[data-pk-val]')){pickerSet(n.dataset.pkVal);return}
-  if(n=c('[data-pk-date]')){pickerSet(n.dataset.pkDate);return}
-  if(n=c('[data-pk-shift]')){const d=new Date(picker.y,picker.m+Number(n.dataset.pkShift),1);picker.y=d.getFullYear();picker.m=d.getMonth();renderDatePicker();return}
-  if(c('[data-pk-today]')){pickerSet(localToday());return}
-  if(c('[data-pk-clear]')){pickerSet('');return}
-  if(n=c('[data-pk-h]')){picker.h=Number(n.dataset.pkH);n.parentNode.querySelector('.sel')?.classList.remove('sel');n.classList.add('sel');return}
-  if(n=c('[data-pk-mi]')){picker.mi=Number(n.dataset.pkMi);n.parentNode.querySelector('.sel')?.classList.remove('sel');n.classList.add('sel');return}
-  if(c('[data-pk-timeok]')){pickerSet(pad(picker.h)+':'+pad(picker.mi));return}
-});
-let confirmResolve=null;
-function confirmDone(v){gid('confirm-wrap').classList.remove('show');const r=confirmResolve;confirmResolve=null;if(r)r(v)}
-function askConfirm(msg,{title='Konfirmasi',ok='Lanjutkan',danger=false}={}){
-  if(confirmResolve)confirmDone(false);
-  gid('confirm-title').textContent=title;gid('confirm-msg').textContent=msg;
-  const y=gid('confirm-yes');y.textContent=ok;y.classList.toggle('dangerfill',danger);
-  gid('confirm-wrap').classList.add('show');
-  return new Promise(r=>{confirmResolve=r});
-}
-gid('confirm-yes').addEventListener('click',()=>confirmDone(true));
-gid('confirm-no').addEventListener('click',()=>confirmDone(false));
-gid('confirm-wrap').addEventListener('click',e=>{if(e.target.id==='confirm-wrap')confirmDone(false)});
-window.addEventListener('keydown',e=>{
-  if(e.key!=='Escape')return;
-  if(gid('confirm-wrap').classList.contains('show')){e.stopImmediatePropagation();confirmDone(false);return}
-  if(gid('picker-wrap').classList.contains('show')){e.stopImmediatePropagation();pickerClose()}
-},true);
-gid('picker-close').innerHTML=icon('close','sm');
-enhanceControls(gid('ai-settings-form'));
-
-/* Mobile Keyboard Smart-Scroll & Focus-Aware Handling
-   Layout follows the keyboard: the WebView is resized natively (Capacitor Keyboard resize:"native"),
-   so we only need to keep the focused field visible once the viewport has settled. */
-(function(){
-  const isField=el=>el&&['INPUT','TEXTAREA','SELECT'].includes(el.tagName);
-  let timer=0;
-  function reveal(){
-    const el=document.activeElement;
-    if(!isField(el))return;
-    clearTimeout(timer);
-    timer=setTimeout(()=>{
-      const r=el.getBoundingClientRect();
-      const vh=(window.visualViewport?window.visualViewport.height:window.innerHeight);
-      const header=el.closest('.dialog-body')?0:70;
-      if(r.top<header+8||r.bottom>vh-16){
-        el.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
-      }
-    },60);
-  }
-  document.addEventListener('focusin',e=>{if(isField(e.target)){document.documentElement.classList.add('kb-open');setTimeout(reveal,320)}});
-  document.addEventListener('focusout',()=>{setTimeout(()=>{if(!isField(document.activeElement))document.documentElement.classList.remove('kb-open')},120)});
-  window.addEventListener('resize',reveal);
-  if(window.visualViewport)window.visualViewport.addEventListener('resize',reveal);
-  const K=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Keyboard;
-  if(K&&K.addListener){
-    K.addListener('keyboardDidShow',reveal);
-    K.addListener('keyboardDidHide',()=>document.documentElement.classList.remove('kb-open'));
-  }
-})();
-
-
-/* Android hardware back button & modal dismiss support */
-window.addEventListener('popstate',()=>{
-  if(document.getElementById('modal-wrap').classList.contains('show')){
-    modalClose();
-  }
-  if(document.getElementById('ai-settings-wrap').classList.contains('show')){
-    closeAISettings();
-  }
-});
-
-if(location.hash&&navs.some(n=>'#'+n[0]===location.hash))view=location.hash.slice(1);
-window.addEventListener('hashchange',()=>{const next=location.hash.slice(1);if(navs.some(n=>n[0]===next)&&next!==view){view=next;render()}});
-render();
-if('serviceWorker'in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-</script></body></html>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="import-input" accept="application/json,.json,text/plain" class="hidden">
+<script src="app.js"></script>
+</body>
+</html>

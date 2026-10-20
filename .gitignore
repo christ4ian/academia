@@ -7,6 +7,8 @@ android/
 www/
 dist/
 build/
+app.js
+app.css
 .gradle/
 local.properties
 *.apk
@@ -26,3 +28,4 @@ Thumbs.db
 *.key
 *.keystore
 *.jks
+google-services*.json

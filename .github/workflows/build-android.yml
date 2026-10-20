@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run unit tests
+        run: npm test
+
       - name: Build web application
         run: npm run build
 
@@ -41,6 +44,41 @@ jobs:
             npx cap add android
           fi
           npx cap sync android
+
+      - name: Configure Firebase google-services.json & Fixed Keystore Signing
+        env:
+          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON_B64" ]; then
+            echo "$GOOGLE_SERVICES_JSON_B64" | tr -d '[:space:]' | base64 -d > android/app/google-services.json
+            echo "google-services.json restored."
+          fi
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | tr -d '[:space:]' | base64 -d > android/app/academia.jks
+            python3 - <<'EOF'
+          import os, re
+          gradle_path = 'android/app/build.gradle'
+          s = open(gradle_path).read()
+          signing_block = """
+              signingConfigs {
+                  debug {
+                      storeFile file('academia.jks')
+                      storePassword System.getenv('KEYSTORE_PASSWORD')
+                      keyAlias System.getenv('KEY_ALIAS')
+                      keyPassword System.getenv('KEY_PASSWORD')
+                  }
+              }
+          """
+          if 'signingConfigs' not in s:
+              s = s.replace('buildTypes {', signing_block + '\n    buildTypes {', 1)
+          open(gradle_path, 'w').write(s)
+          EOF
+            echo "Fixed debug signing configured."
+          fi
 
       - name: Patch Android splash color & keyboard mode
         run: |
@@ -101,6 +139,10 @@ jobs:
 
       - name: Build debug APK
         working-directory: android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
