@@ -59,11 +59,13 @@ jobs:
           fi
           if [ -n "$KEYSTORE_B64" ]; then
             echo "$KEYSTORE_B64" | tr -d '[:space:]' | base64 -d > android/app/academia.jks
-            python3 - <<'EOF'
-          import os, re
-          gradle_path = 'android/app/build.gradle'
-          s = open(gradle_path).read()
-          signing_block = """
+          fi
+          python3 - <<'EOF'
+          import os
+          if os.path.exists('android/app/academia.jks'):
+              gradle_path = 'android/app/build.gradle'
+              s = open(gradle_path).read()
+              signing_block = """
               signingConfigs {
                   debug {
                       storeFile file('academia.jks')
@@ -73,12 +75,11 @@ jobs:
                   }
               }
           """
-          if 'signingConfigs' not in s:
-              s = s.replace('buildTypes {', signing_block + '\n    buildTypes {', 1)
-          open(gradle_path, 'w').write(s)
+              if 'signingConfigs' not in s:
+                  s = s.replace('buildTypes {', signing_block + '\n    buildTypes {', 1)
+                  open(gradle_path, 'w').write(s)
+                  print("Fixed debug signing configured.")
           EOF
-            echo "Fixed debug signing configured."
-          fi
 
       - name: Patch Android splash color & keyboard mode
         run: |
